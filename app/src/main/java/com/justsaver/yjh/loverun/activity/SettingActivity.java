@@ -1,5 +1,7 @@
 package com.justsaver.yjh.loverun.activity;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +37,7 @@ import android.widget.Toast;
 
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
 import com.justsaver.yjh.loverun.R;
+import com.justsaver.yjh.loverun.widget.FeedBackDialogFragment;
 import com.maxleap.GetCallback;
 import com.maxleap.MLDataManager;
 import com.maxleap.MLObject;
@@ -87,6 +90,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.start_run).setOnClickListener(this);
         findViewById(R.id.start_rest).setOnClickListener(this);
+        findViewById(R.id.suggest).setOnClickListener(this);
         findViewById(R.id.license).setOnClickListener(this);
         findViewById(R.id.check_upgrade).setOnClickListener(this);
 
@@ -173,6 +177,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
                 break;
+            case R.id.suggest:
+                showEditDialog();
+                break;
         }
 
     }
@@ -188,8 +195,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.notifications_coursing:
                 message.what = NOTIFICAATION_SWITCH;
                 break;
-
         }
         handler.sendMessage(message);
     }
+
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        FeedBackDialogFragment feedBackDialogFragment = FeedBackDialogFragment.newInstance(null,null);
+        feedBackDialogFragment.show(fm, "feedBackDialogFragment");
+    }
+
 }

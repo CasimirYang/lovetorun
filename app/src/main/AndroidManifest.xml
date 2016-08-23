@@ -22,7 +22,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +32,15 @@
         </activity>
         <activity
             android:name=".activity.CourseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:launchMode="singleTask"
+            android:name=".activity.SettingActivity"
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/SettingTheme" />
+        <activity android:name=".activity.LicenseActivity"></activity>
 
         <service
             android:name=".service.TimerService"
@@ -50,12 +59,7 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activity.SettingActivity"
-            android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"
-            android:theme="@style/SettingTheme" />
-        <activity android:name=".activity.LicenseActivity"></activity>
+
     </application>
 
 </manifest>

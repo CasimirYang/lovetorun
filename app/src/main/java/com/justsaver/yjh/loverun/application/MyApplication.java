@@ -6,6 +6,7 @@ import android.util.Log;
 import com.justsaver.yjh.loverun.BuildConfig;
 import com.maxleap.MaxLeap;
 
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
@@ -17,6 +18,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MaxLeap.initialize(this, "57bb20a601e3b30007d4d265", "ZmxxRWUxQWNmaElrMUw5OUt3TlJKQQ", MaxLeap.REGION_CN);
+
+        ButterKnife.setDebug(BuildConfig.DEBUG);
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         } else {

@@ -31,10 +31,7 @@ public class LicenseActivity extends AppCompatActivity {
         customLicenses.add(new License(this, "hugo", LicenseType.APACHE_LICENSE_20, "2013", "Jake Wharton"));
         customLicenses.add(new License(this, "timber", LicenseType.APACHE_LICENSE_20, "2013", "Jake Wharton"));
 
-
-
         ScrollViewLicenseFragment fragment = ScrollViewLicenseFragment.newInstance();
-
         fragment.addCustomLicense(customLicenses);
 
         android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -48,7 +45,7 @@ public class LicenseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, SettingActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

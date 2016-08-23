@@ -55,14 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            loadData();
 //        }
 
-//        MaxLeap.initialize(this, "57bb20a601e3b30007d4d265", "ZmxxRWUxQWNmaElrMUw5OUt3TlJKQQ", MaxLeap.REGION_CN);
-//        MLObject myComment = new MLObject("Comment");
-//        myComment.put("content", "我很喜欢这条分享");
-//        myComment.put("pubUserId", 1314520);
-//        myComment.put("isRead", false);
-//        myComment.put("isRead22", false);
-//        MLDataManager.saveInBackground(myComment);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         AppCompatImageView setting = (AppCompatImageView) toolbar.findViewById(R.id.setting);
         setting.setOnClickListener(this);
