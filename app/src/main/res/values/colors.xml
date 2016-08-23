@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="display_orientation">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#303F9F</color>
+    <color name="hint_foreground_dark">#2d2c2c</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="darker_gray">#aaa</color>
+
+    <color name="cpv_textColor">#ebebeb</color>
+    <color name="cpv_rimColor">#393838</color>
+    <color name="cpv_unitColor">#ebebeb</color>
+    <color name="cpv_runBarColor">#d24b26</color>
+    <color name="cpv_runFillColor">#d24b26</color>
+    <color name="cpv_barColor">#a0c828</color>
+    <color name="cpv_restBarColor">#a0c828</color>
+    <color name="cpv_restFillColor">#a0c828</color>
+
+    <color name="apptheme_color">#0da9e3</color>
+
+
+    <color name="setting_head_text">#4055de</color>
+
+    <drawable name="clr_pressed">#5064e4</drawable>
+</resources>

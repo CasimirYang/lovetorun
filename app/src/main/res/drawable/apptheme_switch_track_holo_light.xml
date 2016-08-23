@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 The Android Open Source Project
+
+     Licensed under the Apache LicenseActivity, Version 2.0 (the "LicenseActivity");
+     you may not use this file except in compliance with the LicenseActivity.
+     You may obtain a copy of the LicenseActivity at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the LicenseActivity is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the LicenseActivity for the specific language governing permissions and
+     limitations under the LicenseActivity.
+-->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true"  android:drawable="@drawable/apptheme_switch_bg_focused_holo_light" />
+    <item                               android:drawable="@drawable/apptheme_switch_bg_holo_light" />
+</selector>
