@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 sharedPreferences.getString("3_1",null),sharedPreferences.getString("3_2",null),
                 sharedPreferences.getString("3_3",null)));
 
-        adapter =  new WeekCardAdapter(dataList,R.layout.week_card_item,weekLevel,courseLevel);//todo
+        adapter =  new WeekCardAdapter(this,dataList,R.layout.week_card_item,weekLevel,courseLevel);//todo
         adapter.setOnItemClickListener(new WeekCardAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View itemView, int position) {

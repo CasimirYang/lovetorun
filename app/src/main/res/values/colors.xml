@@ -10,7 +10,7 @@
     <color name="darker_gray">#aaa</color>
 
     <color name="cpv_textColor">#ebebeb</color>
-    <color name="cpv_rimColor">#393838</color>
+    <color name="cpv_rimColor">#2d2c2c</color>
     <color name="cpv_unitColor">#ebebeb</color>
     <color name="cpv_runBarColor">#d24b26</color>
     <color name="cpv_runFillColor">#d24b26</color>

@@ -1,5 +1,6 @@
 package com.justsaver.yjh.loverun.adapter;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.justsaver.yjh.loverun.R;
 import com.justsaver.yjh.loverun.data.WeekCard;
+import com.justsaver.yjh.loverun.likeanimation.LikeButtonView;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
     private int weekLevel;
     private int courseLevel;
     private OnItemClickListener onItemClickListener;
+    private Activity activity;
 
     public interface OnItemClickListener{
         void OnItemClick(View itemView, int position);
@@ -45,7 +49,8 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
         this.courseLevel = courseLevel;
     }
 
-    public WeekCardAdapter(@NonNull List<WeekCard> list,@NonNull int layout,int weekLevel,int courseLevel) {
+    public WeekCardAdapter(Activity activity,@NonNull List<WeekCard> list,@NonNull int layout,int weekLevel,int courseLevel) {
+        this.activity = activity;
         this.dataList = list;
         this.resource = layout;
         this.weekLevel = weekLevel;
@@ -66,7 +71,6 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
         WeekCard weekCard = dataList.get(position);
         holder.weekNoView.setText(weekCard.getWeekNo());
         holder.weekTipView.setText(weekCard.getWeekTip());
-       // holder.weekLayout.setBackgroundColor(weekCard.getWeekLayoutColor());
         if( position+1 > weekLevel){
             holder.courseOneOverLay.setVisibility(View.VISIBLE);
             holder.courseTwoOverLay.setVisibility(View.VISIBLE);
@@ -74,6 +78,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
             holder.courseOneLayout.setClickable(false);
             holder.courseTwoLayout.setClickable(false);
             holder.courseThreeLayout.setClickable(false);
+
+            holder.course_one_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+            holder.course_two_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+            holder.course_three_image.setBackgroundResource(R.drawable.ic_star_rate_off);
         }else if((position+1) == weekLevel){
             switch (courseLevel){
                 case 1:
@@ -83,6 +91,11 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
                     holder.courseOneLayout.setClickable(true);
                     holder.courseTwoLayout.setClickable(false);
                     holder.courseThreeLayout.setClickable(false);
+
+                    holder.course_one_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+                    holder.course_two_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+                    holder.course_three_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+
                     break;
                 case 2:
                     holder.courseOneOverLay.setVisibility(View.GONE);
@@ -91,7 +104,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
                     holder.courseOneLayout.setClickable(false);
                     holder.courseTwoLayout.setClickable(true);
                     holder.courseThreeLayout.setClickable(false);
-                    //todo add courseOne done flag
+
+                    holder.course_one_image.setBackgroundResource(R.drawable.ic_star_rate_on);
+                    holder.course_two_image.setBackgroundResource(R.drawable.ic_star_rate_off);
+                    holder.course_three_image.setBackgroundResource(R.drawable.ic_star_rate_off);
                     break;
                 case 3:
                     holder.courseOneOverLay.setVisibility(View.GONE);
@@ -100,7 +116,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
                     holder.courseOneLayout.setClickable(false);
                     holder.courseTwoLayout.setClickable(false);
                     holder.courseThreeLayout.setClickable(true);
-                    //todo add courseOne,courseTwo done flag
+
+                    holder.course_one_image.setBackgroundResource(R.drawable.ic_star_rate_on);
+                    holder.course_two_image.setBackgroundResource(R.drawable.ic_star_rate_on);
+                    holder.course_three_image.setBackgroundResource(R.drawable.ic_star_rate_off);
                     break;
             }
         }else {
@@ -110,7 +129,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
             holder.courseOneLayout.setClickable(false);
             holder.courseTwoLayout.setClickable(false);
             holder.courseThreeLayout.setClickable(false);
-            //todo todo add courseOne,courseTwo,courseThree done flag
+
+            holder.course_one_image.setBackgroundResource(R.drawable.ic_star_rate_on);
+            holder.course_two_image.setBackgroundResource(R.drawable.ic_star_rate_on);
+            holder.course_three_image.setBackgroundResource(R.drawable.ic_star_rate_on);
         }
         holder.courseOneFinishTime.setText(weekCard.getCourseOneFinishTime());
         holder.courseTwoFinishTime.setText(weekCard.getCourseTwoFinishTime());
@@ -131,6 +153,9 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
         private RelativeLayout courseOneOverLay;
         private RelativeLayout courseTwoOverLay;
         private RelativeLayout courseThreeOverLay;
+        private AppCompatImageView course_one_image;
+        private AppCompatImageView course_two_image;
+        private AppCompatImageView course_three_image;
         private RelativeLayout courseOneLayout;
         private RelativeLayout courseTwoLayout;
         private RelativeLayout courseThreeLayout;
@@ -144,6 +169,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
             weekNoView = (AppCompatTextView) itemView.findViewById(R.id.weekNo);
             weekTipView = (AppCompatTextView) itemView.findViewById(R.id.weekTip);
             weekLayout = (RelativeLayout) itemView.findViewById(R.id.weekLayout);
+
+            course_one_image = (AppCompatImageView) itemView.findViewById(R.id.course_one_image);
+            course_two_image = (AppCompatImageView) itemView.findViewById(R.id.course_two_image);
+            course_three_image = (AppCompatImageView) itemView.findViewById(R.id.course_three_image);
 
             courseOneFinishTime = (AppCompatTextView) itemView.findViewById(R.id.course_one_finish_time);
             courseTwoFinishTime = (AppCompatTextView) itemView.findViewById(R.id.course_two_finish_time);

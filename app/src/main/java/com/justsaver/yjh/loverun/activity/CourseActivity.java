@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
 import com.justsaver.yjh.loverun.R;
@@ -33,7 +34,7 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
 
     private CourseTimeLineAdapter courseTimeLineAdapter;
     private List<Long> timeList;
-    private AppCompatButton runDone;
+    private Button runDone;
     private boolean fetchFromService = false;
     private Status status = Status.IDLE;
 
@@ -74,8 +75,8 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         if(keep_screen_on){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        AppCompatButton startRun = (AppCompatButton) findViewById(R.id.startRun);
-        runDone = (AppCompatButton) findViewById(R.id.RunDone);
+        Button startRun = (Button) findViewById(R.id.startRun);
+        runDone = (Button) findViewById(R.id.RunDone);
         startRun.setOnClickListener(this);
         runDone.setOnClickListener(this);
         runDone.setClickable(false);

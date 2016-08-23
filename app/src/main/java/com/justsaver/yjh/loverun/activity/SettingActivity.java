@@ -44,6 +44,7 @@ import com.maxleap.MLObject;
 import com.maxleap.MLQueryManager;
 import com.maxleap.MaxLeap;
 import com.maxleap.exception.MLException;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
 import java.util.logging.LogRecord;
@@ -93,6 +94,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.suggest).setOnClickListener(this);
         findViewById(R.id.license).setOnClickListener(this);
         findViewById(R.id.check_upgrade).setOnClickListener(this);
+
 
         findViewById(R.id.orientation_switch_context).setOnClickListener(this);
         findViewById(R.id.notifications_coursing_context).setOnClickListener(this);

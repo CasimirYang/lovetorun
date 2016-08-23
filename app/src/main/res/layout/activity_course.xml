@@ -12,7 +12,7 @@
     tools:context="com.justsaver.yjh.loverun.activity.CourseActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatButton
+    <Button
         android:id="@+id/startRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-    <android.support.v7.widget.AppCompatButton
+    <Button
         android:id="@+id/RunDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
