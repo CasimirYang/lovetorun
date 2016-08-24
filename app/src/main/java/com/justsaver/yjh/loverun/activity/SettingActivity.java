@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
@@ -49,7 +50,16 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 import java.util.List;
 import java.util.logging.LogRecord;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
+
+    @BindView(R.id.start_run)
+    RelativeLayout runLayout;
+
+    @BindView(R.id.start_rest)
+    RelativeLayout restLayout;
 
     final private static int ORIENTATION_SWITCH = 1;
     final private static int NOTIFICAATION_SWITCH = 2;
@@ -80,8 +90,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_setting);
+        ButterKnife.bind(this);
+
         sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,8 +100,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        findViewById(R.id.start_run).setOnClickListener(this);
-        findViewById(R.id.start_rest).setOnClickListener(this);
+        runLayout.setOnClickListener(this);
+        restLayout.setOnClickListener(this);
+
         findViewById(R.id.suggest).setOnClickListener(this);
         findViewById(R.id.license).setOnClickListener(this);
         findViewById(R.id.check_upgrade).setOnClickListener(this);
@@ -144,6 +156,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.start_run:
                 Intent run = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                run.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
                 run.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select ringtone:");
                 startActivityForResult(run,0);
                 break;

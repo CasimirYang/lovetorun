@@ -1,6 +1,7 @@
 package com.justsaver.yjh.loverun.widget;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,16 +42,13 @@ public class FeedBackDialogFragment extends DialogFragment{
     private static final String ARG_PARAM2 = "param2";
     private Activity activity;
 
-//    private OnCloseListener onCloseListener;
-//
-//    public interface OnCloseListener{
-//        public void closeDialog(DialogFragment dialog);
-//    }
-//    public void setOnCloseListener(OnCloseListener onCloseListener) {
-//        this.onCloseListener = onCloseListener;
-//    }
 
-
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
 
     public static FeedBackDialogFragment newInstance(String param1, String param2) {
         FeedBackDialogFragment fragment = new FeedBackDialogFragment();

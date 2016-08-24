@@ -15,6 +15,8 @@ import android.util.Log;
 
 import com.justsaver.yjh.loverun.activity.CourseActivity;
 
+import timber.log.Timber;
+
 public class TimerService extends Service {
 
     private CountDownTimer countDownTimer;
@@ -77,8 +79,8 @@ public class TimerService extends Service {
                 audioIntent.setPackage(getPackageName());
                 audioIntent.putExtra("item",i);
                 PendingIntent pendingIntent = PendingIntent.getService(this,i,
-                        audioIntent,PendingIntent.FLAG_ONE_SHOT);
-
+                        audioIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+                Timber.i("set alarm,pendingIntent: %s",pendingIntent.toString());
                 alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                         SystemClock.elapsedRealtime()+expire,pendingIntent);
                 expire = expire + timeArray[i];
@@ -98,6 +100,7 @@ public class TimerService extends Service {
             PendingIntent pendingIntent = PendingIntent.getService(this,i,
                     audioIntent,PendingIntent.FLAG_NO_CREATE);
             if(pendingIntent != null){
+                Timber.i("cancel alarm,pendingIntent: %s",pendingIntent.toString());
                 alarmManager.cancel(pendingIntent);
             }
         }

@@ -9,6 +9,7 @@
         <EditText
             android:id="@+id/feedBackEditText"
             android:layout_width="300dp"
+            android:padding="10dp"
             android:layout_height="wrap_content"
             android:hint="在这里输入你的反馈..."
             android:background="@null"

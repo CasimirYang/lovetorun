@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
@@ -14,6 +15,8 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
+
+import java.io.IOException;
 
 public class AudioService extends Service {
 
@@ -39,7 +42,7 @@ public class AudioService extends Service {
             }
         };
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int result = audioManager.requestAudioFocus(afChangeListener,AudioManager.STREAM_MUSIC,
+        int result = audioManager.requestAudioFocus(afChangeListener,AudioManager.STREAM_ALARM,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
 
 
@@ -62,9 +65,21 @@ public class AudioService extends Service {
                     ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 }
             }
-                mediaPlayer = MediaPlayer.create(this,ringTone);
-                Log.i("AudioService","start to play music");
-                mediaPlayer.start(); // then start
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+            try {
+                mediaPlayer.setDataSource(this,ringTone);
+                mediaPlayer.prepare();
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        Log.i("AudioService","start to play music");
+                        mediaPlayer.start(); // then start
+                    }
+                });
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
                     @Override
                     public void onCompletion(MediaPlayer mp) {

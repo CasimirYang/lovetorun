@@ -181,6 +181,7 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
                     stopTimer.setAction("android.intent.action.TIMER_SERVICE");
                     stopTimer.setPackage(getPackageName());
                     stopService(stopTimer);
+                    handler.removeMessages(PROGRESS_MESSAGE);
                     finish();
                 }
             });
