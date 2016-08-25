@@ -77,6 +77,7 @@ public class AudioService extends Service {
                         mediaPlayer.start(); // then start
                     }
                 });
+                //// TODO: 16/8/24  五秒震动
             }catch (IOException e) {
                 e.printStackTrace();
             }

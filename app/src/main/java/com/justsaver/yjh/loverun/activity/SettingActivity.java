@@ -45,7 +45,6 @@ import com.maxleap.MLObject;
 import com.maxleap.MLQueryManager;
 import com.maxleap.MaxLeap;
 import com.maxleap.exception.MLException;
-import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
 import java.util.logging.LogRecord;

@@ -18,9 +18,6 @@ import android.widget.Toast;
 
 import com.justsaver.yjh.loverun.R;
 import com.justsaver.yjh.loverun.data.WeekCard;
-import com.justsaver.yjh.loverun.likeanimation.LikeButtonView;
-import com.sackcentury.shinebuttonlib.ShineButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +30,10 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
     private int resource;
     private int weekLevel;
     private int courseLevel;
-    private OnItemClickListener onItemClickListener;
     private Activity activity;
+
+    private OnItemClickListener onItemClickListener;
+
 
     public interface OnItemClickListener{
         void OnItemClick(View itemView, int position);

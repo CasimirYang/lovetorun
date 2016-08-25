@@ -81,8 +81,8 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         runDone.setOnClickListener(this);
         runDone.setClickable(false);
         Intent intent = getIntent();
-        int weekLevel = intent.getIntExtra("weekLevel", 1);
-        int courseLevel = intent.getIntExtra("courseLevel", 1);
+        int weekLevel = intent.getIntExtra(PreferenceString.weekLevel, 1);
+        int courseLevel = intent.getIntExtra(PreferenceString.courseLevel, 1);
         init(weekLevel, courseLevel);
 
         courseTimeLineAdapter = new CourseTimeLineAdapter(timeList, this);

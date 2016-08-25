@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -11,6 +11,20 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- Toolbar Theme / Apply white arrow -->
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
+
+        <!-- Material Theme -->
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
+
     </style>
 
     <style name="SettingTheme" parent="AppTheme">
@@ -43,5 +57,15 @@
     </style>
 
 
+
+    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- White arrow -->
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/drawerArrowColor</item>
+    </style>
 
 </resources>

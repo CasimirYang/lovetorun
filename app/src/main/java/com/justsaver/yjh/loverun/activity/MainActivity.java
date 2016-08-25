@@ -1,146 +1,99 @@
 package com.justsaver.yjh.loverun.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
 import com.justsaver.yjh.loverun.R;
 import com.justsaver.yjh.loverun.adapter.WeekCardAdapter;
 import com.justsaver.yjh.loverun.data.WeekCard;
-import com.justsaver.yjh.loverun.widget.EndlessRecyclerViewScrollListener;
-import com.maxleap.MLDataManager;
-import com.maxleap.MLObject;
-import com.maxleap.MaxLeap;
+import com.justsaver.yjh.loverun.fragment.WeekCardFragment;
 
-import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private long pressTime = 0;
-    private static final int START_RUN = 1;
-    private List<WeekCard> dataList;
-    private WeekCardAdapter adapter;
-    private SharedPreferences sharedPreferences;
+    public static final int START_RUN = 1;
     private int weekLevel;
     private int courseLevel;
-    private int orientation;
 
-
-
+@BindView(R.id.ViewPager)  ViewPager viewPager;
+@BindView(R.id.toolbar) Toolbar toolbar;
+@BindView(R.id.setting) AppCompatImageView setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-//        if(ifFirstRun()){
-//            loadData();
-//        }
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        AppCompatImageView setting = (AppCompatImageView) toolbar.findViewById(R.id.setting);
         setting.setOnClickListener(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        sharedPreferences = getSharedPreferences(PreferenceString.userInfo,MODE_PRIVATE);
-        orientation = sharedPreferences.getInt(PreferenceString.recyclerViewOrientation,LinearLayoutManager.HORIZONTAL);
+        if(ifFirstRun()){
+            loadData();
+        }
 
-        weekLevel = sharedPreferences.getInt(PreferenceString.weekLevel,1);
-        courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setPageMargin(200); //todo change to from DP
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
-        //init data
-        dataList = new ArrayList<>();
-        //todo color
-        dataList.add(new WeekCard("第一周","3个原则：适度、坚持、休息",53105129,
-                sharedPreferences.getString("1_1",null),sharedPreferences.getString("1_2",null),
-                sharedPreferences.getString("1_3",null)));
-        dataList.add(new WeekCard("第二周","建立基础",356982,
-                sharedPreferences.getString("2_1",null),sharedPreferences.getString("2_2",null),
-                sharedPreferences.getString("2_3",null)));
-        dataList.add(new WeekCard("第三周","继续进行",356982,
-                sharedPreferences.getString("3_1",null),sharedPreferences.getString("3_2",null),
-                sharedPreferences.getString("3_3",null)));
-
-        adapter =  new WeekCardAdapter(this,dataList,R.layout.week_card_item,weekLevel,courseLevel);//todo
-        adapter.setOnItemClickListener(new WeekCardAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(View itemView, int position) {
-                Intent intent = new Intent(MainActivity.this,CourseActivity.class);
-                intent.putExtra(PreferenceString.weekLevel,weekLevel);
-                intent.putExtra(PreferenceString.courseLevel,courseLevel);
-                startActivityForResult(intent,START_RUN);
+            public int getCount() {
+                return 13;
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                Timber.i("getItem %d",position);
+                return WeekCardFragment.newInstance(position);
             }
         });
+        //viewPager.setCurrentItem();
 
-        //todo RecyclerView scroll
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.weekRecyclerView);
-        recyclerView.setAdapter(adapter);
-        LinearLayoutManager layoutManager= new LinearLayoutManager(this,orientation, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                if(totalItemsCount < 12){
-                    Log.i("page:",String.valueOf(page));
-                    Log.i("totalItemsCount:",String.valueOf(totalItemsCount));
-                    dataList.add(new WeekCard("第"+(totalItemsCount+1)+"周",
-                            sharedPreferences.getString((totalItemsCount+1)+"_0_text",null),356982,
-                            sharedPreferences.getString((totalItemsCount+1)+"_1",null),
-                            sharedPreferences.getString((totalItemsCount+1)+"_2",null),
-                            sharedPreferences.getString((totalItemsCount+1)+"_3",null)));
-                    dataList.add(new WeekCard("第"+(totalItemsCount+2)+"周",
-                            sharedPreferences.getString((totalItemsCount+2)+"_0_text",null),356982,
-                            sharedPreferences.getString((totalItemsCount+2)+"_1",null),
-                            sharedPreferences.getString((totalItemsCount+2)+"_2",null),
-                            sharedPreferences.getString((totalItemsCount+2)+"_3",null)));
-                    adapter.notifyItemRangeInserted(totalItemsCount-1,2);
-                }
-            }
-        });
+//        materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
+//        materialViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+//            @Override
+//            public HeaderDesign getHeaderDesign(int page) {
+//                Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.wallpaper_512, null);
+//                return HeaderDesign.fromColorResAndDrawable(R.color.blue,drawable);
+//            }
+//        });
+
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == START_RUN &&  resultCode == RESULT_OK){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            SharedPreferences.Editor editor = getSharedPreferences(PreferenceString.userInfo, Context.MODE_PRIVATE).edit();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             sdf.setTimeZone(TimeZone.getDefault());
             String currentDateAndTime = sdf.format(new Date());
             editor.putString(weekLevel+"_"+courseLevel,currentDateAndTime);
             Log.i("save level",weekLevel+"_"+courseLevel);
-
-            switch (courseLevel){
-                case 1:
-                    dataList.get(weekLevel-1).setCourseOneFinishTime(currentDateAndTime);
-                    break;
-                case 2:
-                    dataList.get(weekLevel-1).setCourseTwoFinishTime(currentDateAndTime);
-                    break;
-                case 3:
-                    dataList.get(weekLevel-1).setCourseThreeFinishTime(currentDateAndTime);
-                    break;
-            }
-
             if(courseLevel == 3){
                 weekLevel = weekLevel+1;
                 courseLevel = 1;
@@ -153,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(weekLevel > 13){
                 //todo  popup message: finish all course
             }
-            adapter.LevelUp(weekLevel,courseLevel);
-            if(courseLevel == 1){
-                adapter.notifyItemChanged(weekLevel-2);
-                adapter.notifyItemChanged(weekLevel-1);
-            }else {
-                adapter.notifyItemChanged(weekLevel-1);
-            }
+//            adapter.LevelUp(weekLevel,courseLevel);
+//            if(courseLevel == 1){
+//                adapter.notifyItemChanged(weekLevel-2);
+//                adapter.notifyItemChanged(weekLevel-1);
+//            }else {
+//                adapter.notifyItemChanged(weekLevel-1);
+//            }
         }
     }
 
