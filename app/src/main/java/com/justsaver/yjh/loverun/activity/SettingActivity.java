@@ -51,8 +51,9 @@ import java.util.logging.LogRecord;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.start_run)
     RelativeLayout runLayout;
@@ -75,6 +76,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         public void handleMessage(Message msg) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
+            Timber.i("%s %s",msg.what,msg.obj);
            switch (msg.what){
                case KEEP_SCREEN_ON_SWITCH:
                    editor.putBoolean(PreferenceString.KEEP_SCREEN_ON, (Boolean) msg.obj);
@@ -90,13 +92,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-
+        Timber.i("onCreate");
         sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -117,12 +120,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         keepScreenOnSwitch = (SwitchCompat) findViewById(R.id.screen_on_switch);
         keepScreenOnSwitch.setChecked( sharedPreferences.getBoolean(PreferenceString.KEEP_SCREEN_ON,false) );
+        keepScreenOnSwitch.setOnCheckedChangeListener(this);
 
         musicOnSwitch = (SwitchCompat) findViewById(R.id.musicOnSwitch);
         musicOnSwitch.setChecked(sharedPreferences.getBoolean(PreferenceString.NOTIFICATIONS,true));
+        musicOnSwitch.setOnCheckedChangeListener(this);
 
         vibrator = (SwitchCompat) findViewById(R.id.vibrator_switch);
         vibrator.setChecked(sharedPreferences.getBoolean(PreferenceString.VIBRATOR,false));
+        vibrator.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -151,25 +157,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        Message message = handler.obtainMessage();
         switch (v.getId()){
             case R.id.screen_on_switch_context:
                 keepScreenOnSwitch.toggle();
-                message.obj = keepScreenOnSwitch.isChecked();
-                message.what = KEEP_SCREEN_ON_SWITCH;
-                handler.sendMessage(message);
                 break;
             case R.id.vibrator_switch_context:
                 vibrator.toggle();
-                message.obj = vibrator.isChecked();
-                message.what = WIBRATOR_SWITCH;
-                handler.sendMessage(message);
                 break;
             case R.id.musicOnSwitch_context:
                 musicOnSwitch.toggle();
-                message.obj = musicOnSwitch.isChecked();
-                message.what = NOTIFICAATION_SWITCH;
-                handler.sendMessage(message);
                 break;
             case R.id.start_run:
                 Intent run = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -221,4 +217,33 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         feedBackDialogFragment.show(fm, "feedBackDialogFragment");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Timber.i("onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Timber.i("onStop");
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        Message message = handler.obtainMessage();
+        message.obj = isChecked;
+        switch (buttonView.getId()){
+            case R.id.screen_on_switch:
+                message.what = KEEP_SCREEN_ON_SWITCH;
+                break;
+            case R.id.musicOnSwitch:
+                message.what = NOTIFICAATION_SWITCH;
+                break;
+            case R.id.vibrator_switch:
+                message.what = WIBRATOR_SWITCH;
+                break;
+        }
+        handler.sendMessage(message);
+    }
 }

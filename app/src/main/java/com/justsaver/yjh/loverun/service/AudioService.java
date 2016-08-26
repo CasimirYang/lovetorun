@@ -99,9 +99,11 @@ public class AudioService extends Service {
         sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
         Boolean vibrate = sharedPreferences.getBoolean(PreferenceString.VIBRATOR,false);
         int permission = getPackageManager().checkPermission(VIBRATOR_SERVICE,getPackageName());
-        if(vibrate && ( PackageManager.PERMISSION_GRANTED == permission) ){
+        Timber.i("permission: %s",permission); //some devices not need it and return -1
+        if(vibrate){
+            Timber.i("vibrate 3000");
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            vibrator.vibrate(5000);
+            vibrator.vibrate(3000);
         }else{
             Timber.i("not permission");
         }

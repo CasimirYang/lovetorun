@@ -23,7 +23,8 @@
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/setting_selector">
+            android:background="@drawable/setting_selector"
+            >
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -35,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:id="@+id/screen_on_switch" />
+                android:id="@+id/screen_on_switch"
+                />
         </RelativeLayout>
         <android.support.v7.widget.AppCompatTextView
             android:layout_marginTop="25dp"
@@ -63,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
-                android:id="@+id/vibrator_switch" />
+                android:id="@+id/vibrator_switch"
+                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -89,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
-                android:id="@+id/musicOnSwitch" />
+                android:id="@+id/musicOnSwitch"
+                />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -150,7 +154,8 @@
                 android:id="@+id/suggest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/setting_selector">
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
@@ -167,7 +172,8 @@
                 android:id="@+id/license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/setting_selector">
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -184,7 +190,8 @@
                 android:id="@+id/check_upgrade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/setting_selector">
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"

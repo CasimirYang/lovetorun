@@ -11,7 +11,7 @@
 
     <string name="keepScreenOn">保持屏幕唤醒</string>
 
-    <string name="vibratorOn">震动五秒</string>
+    <string name="vibratorOn">震动</string>
 
     <string name="notifications">提醒（跑步/休息 切换）</string>
     <string name="about">关于与帮助</string>
