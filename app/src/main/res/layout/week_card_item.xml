@@ -57,7 +57,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/course_one_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:textAlignment="center"
                     android:gravity="center"
                     android:text="课程一"
@@ -67,7 +67,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/course_one_finish_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="match_parent"
                     android:textSize="13sp"
                     android:textAlignment="center"
                     android:gravity="center"

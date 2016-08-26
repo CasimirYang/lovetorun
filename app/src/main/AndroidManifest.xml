@@ -23,7 +23,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
         <activity
             android:name=".activity.CourseActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            />
         <activity
             android:launchMode="singleTask"
             android:name=".activity.SettingActivity"
