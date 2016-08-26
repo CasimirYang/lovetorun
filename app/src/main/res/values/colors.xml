@@ -24,4 +24,15 @@
     <color name="setting_head_text">#4055de</color>
 
     <drawable name="clr_pressed">#5064e4</drawable>
+
+
+    <drawable name="header_background">#5064e4</drawable>
+
+
+    <color name="indicator_1">#d24b26</color>
+    <color name="indicator_2">#cebe5c</color>
+    <color name="indicator_3">#d24b26</color>
+    <color name="indicator_4">#a0c828</color>
+
+
 </resources>

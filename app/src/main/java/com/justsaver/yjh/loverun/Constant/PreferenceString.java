@@ -12,7 +12,7 @@ public class PreferenceString {
     public final static String runTimeRingtone = "runTimeRingtone";
     public final static String restTimeRingtone = "restTimeRingtone";
 
-    public final static String keep_screen_on = "keep_screen_on";
+    public final static String KEEP_SCREEN_ON = "keepScreenOn";
 
     public final static String recyclerViewOrientation = "recyclerViewOrientation";
 

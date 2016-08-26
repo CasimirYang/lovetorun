@@ -9,7 +9,7 @@
 
 
 
-    <string name="display_orientation">星期卡片水平显示</string>
+    <string name="keepScreenOn">保持屏幕唤醒</string>
 
     <string name="notifications">提醒</string>
     <string name="about">关于与帮助</string>

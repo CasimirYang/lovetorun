@@ -3,6 +3,7 @@ package com.justsaver.yjh.loverun.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,18 +30,21 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import github.chenupt.springindicator.SpringIndicator;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private long pressTime = 0;
-    public static final int START_RUN = 1;
+    public static final int START_RUN = 101;
     private int weekLevel;
     private int courseLevel;
 
 @BindView(R.id.ViewPager)  ViewPager viewPager;
 @BindView(R.id.toolbar) Toolbar toolbar;
 @BindView(R.id.setting) AppCompatImageView setting;
+//    @BindView(R.id.indicator)
+//    SpringIndicator springIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadData();
         }
 
+        SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, Context.MODE_PRIVATE);
+        weekLevel = sharedPreferences.getInt(PreferenceString.weekLevel,1);
+        courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
+
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(200); //todo change to from DP
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -70,7 +78,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Timber.i("getItem %d",position);
                 return WeekCardFragment.newInstance(position);
             }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return String.valueOf(position+1);
+            }
+
         });
+        viewPager.setCurrentItem(weekLevel-1);
+     //   springIndicator.setViewPager(viewPager);
+
         //viewPager.setCurrentItem();
 
 //        materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
@@ -84,36 +101,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == START_RUN &&  resultCode == RESULT_OK){
-            SharedPreferences.Editor editor = getSharedPreferences(PreferenceString.userInfo, Context.MODE_PRIVATE).edit();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            sdf.setTimeZone(TimeZone.getDefault());
-            String currentDateAndTime = sdf.format(new Date());
-            editor.putString(weekLevel+"_"+courseLevel,currentDateAndTime);
-            Log.i("save level",weekLevel+"_"+courseLevel);
-            if(courseLevel == 3){
-                weekLevel = weekLevel+1;
-                courseLevel = 1;
-            }else{
-                courseLevel = courseLevel+1;
-            }
-            editor.putInt(PreferenceString.weekLevel,weekLevel);
-            editor.putInt(PreferenceString.courseLevel,courseLevel);
-            editor.apply();
-            if(weekLevel > 13){
-                //todo  popup message: finish all course
-            }
-//            adapter.LevelUp(weekLevel,courseLevel);
-//            if(courseLevel == 1){
-//                adapter.notifyItemChanged(weekLevel-2);
-//                adapter.notifyItemChanged(weekLevel-1);
-//            }else {
-//                adapter.notifyItemChanged(weekLevel-1);
-//            }
-        }
+         super.onActivityResult(requestCode, resultCode, data);
+        Timber.i("onActivityResult %d,%d ",requestCode,resultCode);
+        viewPager.refreshDrawableState();
+
     }
 
     public boolean ifFirstRun() {
@@ -178,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editor.putString("3_1_plan","3,2,3,2,3,2,3,2,3,2,3,2,3,2");
         editor.putString("3_2_plan","2,2,2,2,2,2,2,2,2,2,2,2");
-        editor.putString("3_3_plan",",2,3,2,3,2,3,2,3,2,3,2");
+        editor.putString("3_3_plan","3,2,3,2,3,2,3,2,3,2,3,2");
         editor.putString("3_1_text","跑步3分钟。行走2分钟。共做7次。");
         editor.putString("3_2_text","跑步2分钟。行走2分钟。共做6次。");
         editor.putString("3_3_text","跑步3分钟。行走2分钟。共做6次。");

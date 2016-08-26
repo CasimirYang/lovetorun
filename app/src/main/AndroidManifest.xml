@@ -23,7 +23,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,14 +33,17 @@
         <activity
             android:name=".activity.CourseActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTop"/>
         <activity
             android:launchMode="singleTask"
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
             android:theme="@style/SettingTheme" />
-        <activity android:name=".activity.LicenseActivity"></activity>
+        <activity
+            android:name=".activity.LicenseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SettingTheme"></activity>
 
         <service
             android:name=".service.TimerService"

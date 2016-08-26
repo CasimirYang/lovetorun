@@ -22,8 +22,8 @@
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
 
         <!-- Material Theme -->
-        <!--<item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>-->
-        <!--<item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>-->
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
 
     </style>
 
@@ -41,11 +41,11 @@
     </style>
 
     <!--<style name="Preference.Category.Material">-->
-        <!--<item name="android:layout">@layout/preference_category_custom</item>-->
+    <!--<item name="android:layout">@layout/preference_category_custom</item>-->
     <!--</style>-->
 
     <!--<style name="Preference.SwitchPreference.Material">-->
-        <!--<item name="android:layout">@layout/preference_material</item>-->
+    <!--<item name="android:layout">@layout/preference_material</item>-->
     <!--</style>-->
 
     <style name="Toolbar">

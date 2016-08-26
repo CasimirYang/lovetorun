@@ -69,9 +69,8 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         Log.d("log", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        //todo  add to allow user set
-        boolean keep_screen_on = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE).
-                getBoolean(PreferenceString.keep_screen_on,false);
+        boolean keep_screen_on = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE).
+                getBoolean(PreferenceString.KEEP_SCREEN_ON,false);
         if(keep_screen_on){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
@@ -92,20 +91,13 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void init(int weekLevel, int courseLevel) {
-//        SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE);
-//        String plan = sharedPreferences.getString(weekLevel + "_" + courseLevel + "_plan", null);
-//        String[] planList = plan.split(",");
-//        timeList = new ArrayList<>(planList.length);
-//        for (String item : planList) {
-//            timeList.add(Long.parseLong(item));
-//        }
-        timeList = new ArrayList<>();
-    timeList.add(60000L);
-    timeList.add(120000L);
-    timeList.add(240000L);
-    timeList.add(300000L);
-    timeList.add(60000L);
-    timeList.add(60000L);
+        SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE);
+        String plan = sharedPreferences.getString(weekLevel + "_" + courseLevel + "_plan", null);
+        String[] planList = plan.split(",");
+        timeList = new ArrayList<>(planList.length);
+        for (String item : planList) {
+            timeList.add(Long.parseLong(item)*60*1000);
+        }
     }
 
     @Override

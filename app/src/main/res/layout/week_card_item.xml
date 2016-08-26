@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
     <android.support.v7.widget.CardView
         android:id="@+id/weekItem"
+        android:clipChildren="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         card_view:cardElevation="6dp"
@@ -19,7 +20,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:id="@+id/weekLayout"
-                android:layout_height="170dp"
+                android:layout_height="190dp"
                 android:background="@android:color/holo_blue_light"
                 >
                 <android.support.v7.widget.AppCompatTextView
@@ -49,7 +50,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:background="#fbfbfb"
                 android:id="@+id/course_one"
                 android:clickable="false">
@@ -70,7 +71,7 @@
                     android:textSize="13sp"
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/course_one_text"/>
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/course_one_image"
@@ -95,7 +96,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:background="#fbfbfb"
                 android:id="@+id/course_two">
                 <android.support.v7.widget.AppCompatTextView
@@ -115,7 +116,7 @@
                     android:textSize="13sp"
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/course_two_text"/>
 
                 <android.support.v7.widget.AppCompatImageView
@@ -142,7 +143,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="75dp"
                 android:background="#fbfbfb"
                 android:id="@+id/course_three"
                 android:clipChildren="false">
@@ -163,7 +164,7 @@
                     android:textSize="13sp"
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/course_three_text"/>
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/course_three_image"

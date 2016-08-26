@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app3="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="@color/blue"/>
+            android:background="@drawable/header_background"/>
         <!--<android.support.v7.widget.AppCompatImageView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -24,13 +24,26 @@
 
         <include layout="@layout/head_tool_bar" />
 
+        <!--<github.chenupt.springindicator.SpringIndicator-->
+            <!--android:id="@+id/indicator"-->
+            <!--android:layout_marginTop="145dp"-->
+            <!--app3:siIndicatorColors="@array/indicator_colors"-->
+            <!--app3:siTextColor="@color/white"-->
+            <!--app3:siSelectedTextColor="@color/white"-->
+            <!--app3:siIndicatorColor="@color/black"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:clipChildren="false"/>-->
+
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:id="@+id/ViewPager"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="400dp"
+            android:clipChildren="false"
             />
     </FrameLayout>
 

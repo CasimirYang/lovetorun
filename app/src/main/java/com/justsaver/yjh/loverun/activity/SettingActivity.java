@@ -60,22 +60,22 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.start_rest)
     RelativeLayout restLayout;
 
-    final private static int ORIENTATION_SWITCH = 1;
+    final private static int KEEP_SCREEN_ON_SWITCH = 1;
     final private static int NOTIFICAATION_SWITCH = 2;
 
     final private static int RUN = 3;
     final private static int REST = 4;
 
     private SharedPreferences sharedPreferences ;
-    SwitchCompat orientation_switch;
+    SwitchCompat keepScreenOnSwitch;
     SwitchCompat notifications_coursing;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
            switch (msg.what){
-               case ORIENTATION_SWITCH:
-                   editor.putBoolean(PreferenceString.ORIENTATION, (Boolean) msg.obj);
+               case KEEP_SCREEN_ON_SWITCH:
+                   editor.putBoolean(PreferenceString.KEEP_SCREEN_ON, (Boolean) msg.obj);
                    break;
                case NOTIFICAATION_SWITCH:
                    editor.putBoolean(PreferenceString.NOTIFICATIONS, (Boolean) msg.obj);
@@ -107,12 +107,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.check_upgrade).setOnClickListener(this);
 
 
-        findViewById(R.id.orientation_switch_context).setOnClickListener(this);
+        findViewById(R.id.screen_on_switch_context).setOnClickListener(this);
         findViewById(R.id.notifications_coursing_context).setOnClickListener(this);
 
-        orientation_switch = (SwitchCompat) findViewById(R.id.orientation_switch);
-        orientation_switch.setChecked( sharedPreferences.getBoolean(PreferenceString.ORIENTATION,true) );
-        orientation_switch.setOnCheckedChangeListener(this);
+        keepScreenOnSwitch = (SwitchCompat) findViewById(R.id.screen_on_switch);
+        keepScreenOnSwitch.setChecked( sharedPreferences.getBoolean(PreferenceString.KEEP_SCREEN_ON,false) );
+        keepScreenOnSwitch.setOnCheckedChangeListener(this);
 
         notifications_coursing = (SwitchCompat) findViewById(R.id.notifications_coursing);
         notifications_coursing.setChecked(sharedPreferences.getBoolean(PreferenceString.NOTIFICATIONS,true));
@@ -147,8 +147,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.orientation_switch_context:
-                orientation_switch.toggle();
+            case R.id.screen_on_switch_context:
+                keepScreenOnSwitch.toggle();
                 break;
             case R.id.notifications_coursing_context:
                 notifications_coursing.toggle();
@@ -203,8 +203,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         Message message = handler.obtainMessage();
         message.obj = isChecked;
         switch (buttonView.getId()){
-            case R.id.orientation_switch:
-                message.what = ORIENTATION_SWITCH;
+            case R.id.screen_on_switch:
+                message.what = KEEP_SCREEN_ON_SWITCH;
                 break;
             case R.id.notifications_coursing:
                 message.what = NOTIFICAATION_SWITCH;
