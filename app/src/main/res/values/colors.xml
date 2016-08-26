@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#2d2c2c</color>
     <color name="display_orientation">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#303F9F</color>
+    <color name="colorPrimaryDark">#2d2c2c</color>
+    <color name="colorAccent">#9e6b42</color>
     <color name="hint_foreground_dark">#2d2c2c</color>
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
@@ -21,18 +21,22 @@
     <color name="apptheme_color">#0da9e3</color>
 
 
-    <color name="setting_head_text">#4055de</color>
+    <color name="setting_head_text">#b67138</color>
 
-    <drawable name="clr_pressed">#5064e4</drawable>
+    <drawable name="clr_pressed">#313131</drawable>
 
+    <drawable name="header_background">#2d2c2c</drawable>
 
-    <drawable name="header_background">#5064e4</drawable>
+    <drawable name="course_item_background_normal">#ebebeb</drawable>
+    <drawable name="course_item_background_pressed">#bfbebe</drawable>
 
+    <!--<drawable name="run_button_disable">#1d1f25</drawable>-->
+    <!--<drawable name="start_run_button_normal">#42a730</drawable>-->
+    <!--<drawable name="start_run_button_pressed">#358727</drawable>-->
+    <!--<drawable name="finish_run_button_normal">#e22a24</drawable>-->
+    <!--<drawable name="finish_run_button_pressed">#c1231e</drawable>-->
 
-    <color name="indicator_1">#d24b26</color>
-    <color name="indicator_2">#cebe5c</color>
-    <color name="indicator_3">#d24b26</color>
-    <color name="indicator_4">#a0c828</color>
+<color name="cardview_background">#5064e4</color>
 
 
 </resources>

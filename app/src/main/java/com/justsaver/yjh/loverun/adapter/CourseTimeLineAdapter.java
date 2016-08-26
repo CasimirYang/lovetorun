@@ -99,24 +99,14 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
         }
 
     }
-//
-//    private int getLastProgress(){
-//        int lastProgress = currentProgress;
-//       if(remainTime != -2L){
-//           long temp =0;
-//           for(int i=timeList.size()-1; i>=0; i--){
-//               temp = temp + timeList.get(i);
-//               if(remainTime < temp){
-//                   lastProgress = i;
-//               }
-//           }
-//       }
-//        return lastProgress;
-//    }
 
 
     public void setCurrentProgress(int currentProgress) {
         this.currentProgress = currentProgress;
+    }
+
+    public int getCurrentProgress() {
+        return currentProgress;
     }
 
     public void setRemainTime(long remainTime) {

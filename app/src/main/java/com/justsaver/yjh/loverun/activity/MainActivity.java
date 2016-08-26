@@ -30,7 +30,6 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import github.chenupt.springindicator.SpringIndicator;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Timber.i("onCreate");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -270,5 +270,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.i("onDestroy");
     }
 }

@@ -26,39 +26,51 @@ import com.justsaver.yjh.loverun.service.TimerService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import timber.log.Timber;
+
+public class CourseActivity extends AppCompatActivity {
 
     enum Status {
-        IDLE, RUNNING
+        IDLE, RUNNING,DONE
     }
 
     private CourseTimeLineAdapter courseTimeLineAdapter;
     private List<Long> timeList;
-    private Button runDone;
     private boolean fetchFromService = false;
-    private Status status = Status.IDLE;
+    private Status status;
 
     public static final int PROGRESS_MESSAGE = 1;
     public static final int FINISH_MESSAGE = 2;
     public static final int REMAIN_TIME = 3;
 
+    @BindView(R.id.RunButton) Button RunButton;
+    @BindView(R.id.runView) RecyclerView recyclerView;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == PROGRESS_MESSAGE) {
-                Log.i("CourseActivity", "receive message from progress_message:" + msg.arg1);
-                courseTimeLineAdapter.setRemainTime(-2L);
-                courseTimeLineAdapter.setCurrentProgress(msg.arg1);
-                courseTimeLineAdapter.notifyItemChanged(msg.arg1);
-            } else if (msg.what == FINISH_MESSAGE) {
-                runDone.setClickable(true);
-            }
-            if (fetchFromService) {
-                if (msg.what == REMAIN_TIME) {
+            if(fetchFromService){
+                if(msg.what == REMAIN_TIME){
                     Log.i("CourseActivity", "receive message from remain time:" + msg.obj);
                     long millisUntilFinished = (long) msg.obj;
                     courseTimeLineAdapter.setRemainTime(millisUntilFinished);
                     courseTimeLineAdapter.notifyDataSetChanged();
+                    if(millisUntilFinished == 0){
+                        changeRunStatus(Status.DONE);
+                    }
+                }
+            }else{
+                if (msg.what == PROGRESS_MESSAGE) {
+                    Log.i("CourseActivity", "receive message from progress_message:" + msg.arg1);
+                    courseTimeLineAdapter.setRemainTime(-2L);
+                    courseTimeLineAdapter.setCurrentProgress(msg.arg1);
+                    courseTimeLineAdapter.notifyItemChanged(msg.arg1);
+                    recyclerView.smoothScrollToPosition(msg.arg1);
+                } else if (msg.what == FINISH_MESSAGE) {
+                    changeRunStatus(Status.DONE);
                 }
             }
         }
@@ -69,25 +81,24 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         Log.d("log", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+        ButterKnife.bind(this);
         boolean keep_screen_on = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE).
                 getBoolean(PreferenceString.KEEP_SCREEN_ON,false);
         if(keep_screen_on){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        Button startRun = (Button) findViewById(R.id.startRun);
-        runDone = (Button) findViewById(R.id.RunDone);
-        startRun.setOnClickListener(this);
-        runDone.setOnClickListener(this);
-        runDone.setClickable(false);
+        status = Status.IDLE;
         Intent intent = getIntent();
         int weekLevel = intent.getIntExtra(PreferenceString.weekLevel, 1);
         int courseLevel = intent.getIntExtra(PreferenceString.courseLevel, 1);
         init(weekLevel, courseLevel);
 
         courseTimeLineAdapter = new CourseTimeLineAdapter(timeList, this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.runView);
+        recyclerView.setFocusable(false);
         recyclerView.setAdapter(courseTimeLineAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
 
     private void init(int weekLevel, int courseLevel) {
@@ -96,85 +107,97 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         String[] planList = plan.split(",");
         timeList = new ArrayList<>(planList.length);
         for (String item : planList) {
-            timeList.add(Long.parseLong(item)*60*1000);
+            timeList.add(Long.parseLong(item) * 60 * 1000);
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.startRun:
-                startToRun();
-                status = Status.RUNNING;
-                Intent serviceIntent = new Intent(this, TimerService.class);
-                long[] timeArray = new long[timeList.size()];
-                for (int i = 0;i< timeList.size();i++) {
-                    timeArray[i] = timeList.get(i);
-                }
-                serviceIntent.putExtra("handler", new Messenger(handler));
-                serviceIntent.putExtra("timeArray",timeArray);
-                startService(serviceIntent);
+
+  @OnClick(R.id.RunButton) public void RunButton() {
+      if(status == Status.IDLE){
+          changeRunStatus(Status.RUNNING);
+          //start to  send message to refresh recycleView Item
+          new Thread(new Runnable() {
+              @Override
+              public void run() {
+                  int size = timeList.size();
+                  long runAtTime = 0;
+                  for (int i = 0; i < size; i++) {
+                      Message message = new Message();
+                      message.what = PROGRESS_MESSAGE;
+                      message.arg1 = i;
+                      handler.sendMessageDelayed(message, runAtTime);
+                      runAtTime = runAtTime + timeList.get(i);
+                      Log.i("send message", "startToRun send message:" + i);
+                  }
+                  Message message = new Message();
+                  message.what = FINISH_MESSAGE;
+                  handler.sendMessageDelayed(message, runAtTime);
+              }
+          }).start();
+
+          //start TimerService
+          Intent serviceIntent = new Intent(this, TimerService.class);
+          long[] timeArray = new long[timeList.size()];
+          for (int i = 0;i< timeList.size();i++) {
+              timeArray[i] = timeList.get(i);
+          }
+          serviceIntent.putExtra("handler", new Messenger(handler));
+          serviceIntent.putExtra("timeArray",timeArray);
+          startService(serviceIntent);
+      }else if(status == Status.DONE){
+          stopRun();
+          setResult(RESULT_OK);
+          finish();
+      }
+    }
+
+    private void changeRunStatus(Status status){
+        this.status = status;
+        switch (status){
+            case RUNNING:
+                RunButton.setText(R.string.run_status_running);
+                RunButton.setEnabled(false);
                 break;
-            case R.id.RunDone:
-                //todo popup complete info
-                setResult(RESULT_OK);
-                finish();
+            case DONE:
+                RunButton.setEnabled(true);
+                RunButton.setText(R.string.run_status_done);
+                RunButton.setBackgroundResource(R.drawable.finish_run_button);
                 break;
             default:
                 break;
         }
     }
 
-    private void startToRun() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int size = timeList.size();
-                long runAtTime = 0;
-                for (int i = 0; i < size; i++) {
-                    Message message = new Message();
-                    message.what = PROGRESS_MESSAGE;
-                    message.arg1 = i;
-                    handler.sendMessageDelayed(message, runAtTime);
-                    runAtTime = runAtTime + timeList.get(i);
-                    Log.i("send message", "startToRun send message:" + i);
-                }
-                Message message = new Message();
-                message.what = FINISH_MESSAGE;
-                handler.sendMessageDelayed(message, runAtTime);
-            }
-        }).start();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Timber.i("onstart");
+        recyclerView.scrollToPosition(courseTimeLineAdapter.getCurrentProgress());
     }
-
 
     @Override
     protected void onRestart() {
-        fetchFromService = false;
-        Log.d("log", "onRestart");
         super.onRestart();
+        Log.d("log", "onRestart");
+        fetchFromService = false;
     }
 
     @Override
     protected void onPause() {
-        fetchFromService = true;
         Log.d("log", "onPause");
         super.onPause();
     }
 
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && status == Status.RUNNING) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && status != Status.IDLE) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("正在跑步中，确认要退出吗？");
+            builder.setMessage("课程尚未完成，确认要退出吗？");
             builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent stopTimer = new Intent();
-                    stopTimer.setAction("android.intent.action.TIMER_SERVICE");
-                    stopTimer.setPackage(getPackageName());
-                    stopService(stopTimer);
-                    handler.removeMessages(PROGRESS_MESSAGE);
-                    finish();
+                    stopRun();
+                    onBackPressed();
                 }
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -188,6 +211,18 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             return super.onKeyDown(keyCode, event);
         }
+    }
+
+    private void stopRun(){
+        Intent stopTimerService = new Intent();
+        stopTimerService.setAction("android.intent.action.TIMER_SERVICE");
+        stopTimerService.setPackage(getPackageName());
+        stopService(stopTimerService);
+        Intent stopAudioService = new Intent();
+        stopAudioService.setAction("android.intent.action.AUDIO_SERVICE");
+        stopAudioService.setPackage(getPackageName());
+        stopService(stopAudioService);
+        handler.removeMessages(PROGRESS_MESSAGE);
     }
 
 
@@ -214,12 +249,14 @@ public class CourseActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStop() {
         Log.d("log", "onStop");
         super.onStop();
+        fetchFromService = true;
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("log", "ondestroy");
         super.onDestroy();
+        Log.d("log", "ondestroy");
+        stopRun();
     }
 
 

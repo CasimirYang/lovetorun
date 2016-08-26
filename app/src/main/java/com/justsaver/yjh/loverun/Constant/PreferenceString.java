@@ -27,5 +27,6 @@ public class PreferenceString {
 
     public final static String NOTIFICATIONS = "notification";
 
+    public final static String VIBRATOR = "vibrator";
 
 }

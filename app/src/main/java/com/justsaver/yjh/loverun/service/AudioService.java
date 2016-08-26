@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
@@ -11,6 +12,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -18,11 +20,13 @@ import com.justsaver.yjh.loverun.Constant.PreferenceString;
 
 import java.io.IOException;
 
+import timber.log.Timber;
+
 public class AudioService extends Service {
 
     AudioManager audioManager;
     MediaPlayer mediaPlayer;
-
+    SharedPreferences sharedPreferences;
 
     public AudioService() {
     }
@@ -77,7 +81,6 @@ public class AudioService extends Service {
                             mediaPlayer.start(); // then start
                         }
                     });
-                    //// TODO: 16/8/24  五秒震动
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -92,6 +95,22 @@ public class AudioService extends Service {
 
             }
         }
+        //vibrator 5 second
+        sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
+        Boolean vibrate = sharedPreferences.getBoolean(PreferenceString.VIBRATOR,false);
+        int permission = getPackageManager().checkPermission(VIBRATOR_SERVICE,getPackageName());
+        if(vibrate && ( PackageManager.PERMISSION_GRANTED == permission) ){
+            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(5000);
+        }else{
+            Timber.i("not permission");
+        }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.i("onDestroy");
     }
 }

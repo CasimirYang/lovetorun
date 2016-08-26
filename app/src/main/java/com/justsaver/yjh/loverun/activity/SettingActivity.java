@@ -52,7 +52,7 @@ import java.util.logging.LogRecord;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.start_run)
     RelativeLayout runLayout;
@@ -62,13 +62,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     final private static int KEEP_SCREEN_ON_SWITCH = 1;
     final private static int NOTIFICAATION_SWITCH = 2;
+    final private static int WIBRATOR_SWITCH = 3;
 
     final private static int RUN = 3;
     final private static int REST = 4;
 
     private SharedPreferences sharedPreferences ;
     SwitchCompat keepScreenOnSwitch;
-    SwitchCompat notifications_coursing;
+    SwitchCompat musicOnSwitch;
+    SwitchCompat vibrator;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -79,6 +81,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                    break;
                case NOTIFICAATION_SWITCH:
                    editor.putBoolean(PreferenceString.NOTIFICATIONS, (Boolean) msg.obj);
+                   break;
+               case WIBRATOR_SWITCH:
+                   editor.putBoolean(PreferenceString.VIBRATOR, (Boolean) msg.obj);
                    break;
            }
             editor.apply();
@@ -106,17 +111,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.license).setOnClickListener(this);
         findViewById(R.id.check_upgrade).setOnClickListener(this);
 
-
         findViewById(R.id.screen_on_switch_context).setOnClickListener(this);
-        findViewById(R.id.notifications_coursing_context).setOnClickListener(this);
+        findViewById(R.id.musicOnSwitch_context).setOnClickListener(this);
+        findViewById(R.id.vibrator_switch_context).setOnClickListener(this);
 
         keepScreenOnSwitch = (SwitchCompat) findViewById(R.id.screen_on_switch);
         keepScreenOnSwitch.setChecked( sharedPreferences.getBoolean(PreferenceString.KEEP_SCREEN_ON,false) );
-        keepScreenOnSwitch.setOnCheckedChangeListener(this);
 
-        notifications_coursing = (SwitchCompat) findViewById(R.id.notifications_coursing);
-        notifications_coursing.setChecked(sharedPreferences.getBoolean(PreferenceString.NOTIFICATIONS,true));
-        notifications_coursing.setOnCheckedChangeListener(this);
+        musicOnSwitch = (SwitchCompat) findViewById(R.id.musicOnSwitch);
+        musicOnSwitch.setChecked(sharedPreferences.getBoolean(PreferenceString.NOTIFICATIONS,true));
+
+        vibrator = (SwitchCompat) findViewById(R.id.vibrator_switch);
+        vibrator.setChecked(sharedPreferences.getBoolean(PreferenceString.VIBRATOR,false));
     }
 
     @Override
@@ -145,12 +151,25 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        Message message = handler.obtainMessage();
         switch (v.getId()){
             case R.id.screen_on_switch_context:
                 keepScreenOnSwitch.toggle();
+                message.obj = keepScreenOnSwitch.isChecked();
+                message.what = KEEP_SCREEN_ON_SWITCH;
+                handler.sendMessage(message);
                 break;
-            case R.id.notifications_coursing_context:
-                notifications_coursing.toggle();
+            case R.id.vibrator_switch_context:
+                vibrator.toggle();
+                message.obj = vibrator.isChecked();
+                message.what = WIBRATOR_SWITCH;
+                handler.sendMessage(message);
+                break;
+            case R.id.musicOnSwitch_context:
+                musicOnSwitch.toggle();
+                message.obj = musicOnSwitch.isChecked();
+                message.what = NOTIFICAATION_SWITCH;
+                handler.sendMessage(message);
                 break;
             case R.id.start_run:
                 Intent run = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -194,27 +213,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 showEditDialog();
                 break;
         }
-
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Message message = handler.obtainMessage();
-        message.obj = isChecked;
-        switch (buttonView.getId()){
-            case R.id.screen_on_switch:
-                message.what = KEEP_SCREEN_ON_SWITCH;
-                break;
-            case R.id.notifications_coursing:
-                message.what = NOTIFICAATION_SWITCH;
-                break;
-        }
-        handler.sendMessage(message);
     }
 
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
-        FeedBackDialogFragment feedBackDialogFragment = FeedBackDialogFragment.newInstance(null,null);
+        FeedBackDialogFragment feedBackDialogFragment = FeedBackDialogFragment.newInstance();
         feedBackDialogFragment.show(fm, "feedBackDialogFragment");
     }
 

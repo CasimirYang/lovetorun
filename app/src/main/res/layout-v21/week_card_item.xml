@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:id="@+id/weekLayout"
             android:layout_height="190dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="@drawable/cardview_background"
             >
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/weekNo"
@@ -52,7 +52,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:background="#fbfbfb"
+            android:background="#ebebeb"
             android:id="@+id/course_one"
             android:clickable="false">
             <android.support.v7.widget.AppCompatTextView
@@ -98,7 +98,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:background="#fbfbfb"
+            android:background="#ebebeb"
             android:id="@+id/course_two">
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/course_two_text"
@@ -145,7 +145,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:background="#fbfbfb"
+            android:background="#ebebeb"
             android:id="@+id/course_three"
             android:clipChildren="false">
             <android.support.v7.widget.AppCompatTextView

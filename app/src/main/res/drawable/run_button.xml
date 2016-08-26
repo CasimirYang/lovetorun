@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- corners设置圆角，只适用于rectangle -->
+    <corners android:radius="10dp" />
+
+    <!-- solid指定形状的填充色，只有android:color一个属性 -->
+    <!--<solid android:color="#2F90BD" />-->
+
+    <!--<padding-->
+        <!--android:bottom="10dp"-->
+        <!--android:left="10dp"-->
+        <!--android:right="10dp"-->
+        <!--android:top="10dp" />-->
+
+    <gradient
+        android:endColor="#3dbe43"
+        android:gradientRadius="40dp"
+        android:startColor="#279628"
+        android:type="linear"/>
+
+    <!-- stroke设置描边 -->
+    </shape>

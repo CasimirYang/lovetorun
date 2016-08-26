@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- corners设置圆角，只适用于rectangle -->
+    <corners android:radius="10dp" />
+
+    <gradient
+        android:endColor="#a63c22"
+        android:gradientRadius="40dp"
+        android:startColor="#701c16"
+        android:type="linear"/>
+
+</shape>

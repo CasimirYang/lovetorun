@@ -47,7 +47,32 @@
             android:layout_centerVertical="true"
             android:textColor="@color/setting_head_text"/>
         <RelativeLayout
-            android:id="@+id/notifications_coursing_context"
+            android:id="@+id/vibrator_switch_context"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="@drawable/setting_selector">
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="@string/vibratorOn"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                />
+            <android.support.v7.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/vibrator_switch" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dcd3d3"
+                android:layout_below="@id/vibrator_switch"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/musicOnSwitch_context"
             android:background="@drawable/setting_selector"
             android:clickable="true"
             android:layout_width="match_parent"
@@ -56,7 +81,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:text="@string/notifications_coursing"
+                android:text="@string/musicOn"
                 android:gravity="center"
                 android:layout_centerVertical="true"
                />
@@ -64,12 +89,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
-                android:id="@+id/notifications_coursing" />
+                android:id="@+id/musicOnSwitch" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#dcd3d3"
-                android:layout_below="@id/notifications_coursing"
+                android:layout_below="@id/musicOnSwitch"
                />
         </RelativeLayout>
         <RelativeLayout

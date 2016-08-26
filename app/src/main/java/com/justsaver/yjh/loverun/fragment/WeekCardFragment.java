@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.github.lzyzsd.randomcolor.RandomColor;
 import com.justsaver.yjh.loverun.Constant.PreferenceString;
 import com.justsaver.yjh.loverun.R;
 import com.justsaver.yjh.loverun.activity.CourseActivity;
@@ -99,6 +100,7 @@ public class WeekCardFragment extends Fragment {
         weekLevel = sharedPreferences.getInt(PreferenceString.weekLevel,1);
         courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
         int weekNo = position +1;
+       // weekLayout.setBackgroundColor(new RandomColor().randomColor());
         weekNoView.setText("第"+weekNo+"周");
         weekTipView.setText(sharedPreferences.getString(weekNo+"_0_text",""));
         courseOneFinishTime.setText(sharedPreferences.getString(weekNo+"_1",""));

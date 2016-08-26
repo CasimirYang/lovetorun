@@ -47,14 +47,13 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
-
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
 
     compile ('com.github.florent37:materialviewpager:1.2.0@aar'){
         transitive = true
     }
 
-    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
+    compile 'com.github.lzyzsd.randomcolor:library:1.0.0'
 
 }
 
