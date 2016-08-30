@@ -1,4 +1,4 @@
-package com.casimir.loverun.application;
+package com.casimir.loverun.base;
 
 /**
  * Created by yjh on 16/8/23.

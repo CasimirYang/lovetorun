@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.artitk.licensefragment.ScrollViewLicenseFragment;
 import com.artitk.licensefragment.model.License;
 import com.artitk.licensefragment.model.LicenseType;
 import com.casimir.loverun.R;
+import com.casimir.loverun.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
-public class LicenseActivity extends AppCompatActivity {
+public class LicenseActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,4 +53,5 @@ public class LicenseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

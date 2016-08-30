@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -21,17 +22,19 @@ import android.widget.Toast;
 
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
+import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.widget.FeedBackDialogFragment;
 import com.maxleap.GetCallback;
 import com.maxleap.MLObject;
 import com.maxleap.MLQueryManager;
 import com.maxleap.exception.MLException;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.start_run)
     RelativeLayout runLayout;
@@ -224,4 +227,5 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
         handler.sendMessage(message);
     }
+
 }

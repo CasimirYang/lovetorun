@@ -10,17 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
+import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.fragment.WeekCardFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private long pressTime = 0;
     public static final int START_RUN = 101;
@@ -265,4 +268,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         Timber.i("onDestroy");
     }
+
 }

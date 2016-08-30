@@ -1,4 +1,4 @@
-package com.casimir.loverun.application;
+package com.casimir.loverun.base;
 
 import android.app.Application;
 import android.util.Log;
@@ -13,10 +13,16 @@ import timber.log.Timber;
  * Created by yjh on 16/8/23.
  */
 
-public class MyApplication extends Application {
+public class BaseApplication extends Application {
+
+  //  long sessionTimeOut = 1000*60*60;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+      //  MobclickAgent.setSessionContinueMillis(sessionTimeOut);
+
         MaxLeap.initialize(this, "57bb20a601e3b30007d4d265", "ZmxxRWUxQWNmaElrMUw5OUt3TlJKQQ", MaxLeap.REGION_CN);
 
         ButterKnife.setDebug(BuildConfig.DEBUG);

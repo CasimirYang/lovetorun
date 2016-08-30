@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.casimir.loverun" >
+    package="com.casimir.loverun">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission  android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <permission android:name="com.casimir.loverun" android:protectionLevel="signature"/>
 
     <application
-        android:permission="com.casimir.loverun"
+        android:name=".base.BaseApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MainTheme"
-        android:name=".application.MyApplication">
-        <meta-data android:name="ml_channel" android:value="google_play"/>
-        <meta-data android:value="YOUR_APP_KEY" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+        android:theme="@style/MainTheme">
+
+        <!-- maxleap -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57c52bb8e0f55a254d002baa" />
+        <meta-data
+            android:name="ml_channel"
+            android:value="Wandoujia" />
+
+        <!-- umeng -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Wandoujia" />
+
         <activity
-            android:name="com.casimir.loverun.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,9 +41,8 @@
         </activity>
         <activity
             android:name=".activity.CourseActivity"
-            android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_settings"
@@ -40,9 +50,9 @@
             android:theme="@style/SettingTheme" />
         <activity
             android:name=".activity.LicenseActivity"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/SettingTheme"
-            android:noHistory="true"/>
+            android:theme="@style/SettingTheme" />
 
         <service
             android:name=".service.TimerService"
@@ -60,6 +70,14 @@
                 <action android:name="android.intent.action.AUDIO_SERVICE" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".receiver.PushReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
+            </intent-filter>
+        </receiver>
 
 
     </application>

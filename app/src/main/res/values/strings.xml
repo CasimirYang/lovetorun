@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">loverun</string>
+    <string name="app_name">爱上跑步</string>
     <string name="tittle_name">13周科学跑步计划</string>
     <string name="rest_timeFormat">休息%1$d分钟</string>
     <string name="run_timeFormat">慢跑%1$d分钟</string>

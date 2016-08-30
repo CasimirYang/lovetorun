@@ -11,6 +11,15 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
+        }
+        manifestPlaceholders = [
+                GETUI_APP_ID : "xfl0cWz4EG9n3YfRGW5o55",
+                GETUI_APP_KEY : "FiaWqxkHBz6ZkmbHx5lWF3",
+                GETUI_APP_SECRET : "rwbicQssry5GYIAvs8dyD",
+                PACKAGE_NAME : applicationId
+        ]
     }
     buildTypes {
         release {
@@ -28,7 +37,6 @@ android {
     dataBinding {
         enabled true
     }
-
 }
 
 dependencies {
@@ -47,15 +55,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
-    compile 'com.jakewharton.scalpel:scalpel:1.1.2'
-
-    compile ('com.github.florent37:materialviewpager:1.2.0@aar'){
-        transitive = true
-    }
-
-    compile 'com.github.lzyzsd.randomcolor:library:1.0.0'
-
     compile 'com.umeng.analytics:analytics:latest.integration'
+
+//个推
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.getui:sdk:+'
+    compile 'com.android.support:support-v4:+'
 
 }
 

@@ -19,7 +19,9 @@ import android.widget.Button;
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
 import com.casimir.loverun.adapter.CourseTimeLineAdapter;
+import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.service.TimerService;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-public class CourseActivity extends AppCompatActivity {
+public class CourseActivity extends BaseActivity {
 
     enum Status {
         IDLE, RUNNING,DONE
@@ -180,11 +182,6 @@ public class CourseActivity extends AppCompatActivity {
         fetchFromService = false;
     }
 
-    @Override
-    protected void onPause() {
-        Log.d("log", "onPause");
-        super.onPause();
-    }
 
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
@@ -236,11 +233,7 @@ public class CourseActivity extends AppCompatActivity {
         Log.d("log", "onRestoreInstanceState");
     }
 
-    @Override
-    protected void onResume() {
-        Log.d("log", "onResume");
-        super.onResume();
-    }
+
 
 
     @Override
