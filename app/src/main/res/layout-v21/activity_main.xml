@@ -1,42 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app3="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     >
-
-    <FrameLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
+        android:background="@drawable/header_background"/>
+
+    <include layout="@layout/head_tool_bar" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ViewPager"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:clipChildren="false"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@drawable/header_background"/>
-        <!--<android.support.v7.widget.AppCompatImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/wallpaper_512"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:scaleType="centerCrop"/>-->
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        />
 
-        <include layout="@layout/head_tool_bar" />
-
-
-        <android.support.v4.view.ViewPager
-            android:layout_marginTop="150dp"
-            android:id="@+id/ViewPager"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:clipChildren="false"
-            />
-    </FrameLayout>
-
-    <include layout="@layout/drawer" />
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

@@ -35,75 +35,78 @@ public class AudioService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //todo  change to thread
         Log.i("AudioService", "onStartCommand");
         if (intent != null) {
-            final OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
-                @Override
-                public void onAudioFocusChange(int focusChange) {
-                }
-            };
-            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            int result = audioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_ALARM,
-                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
-
-
-            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE);
-                Uri ringTone = null;
-                int item = intent.getIntExtra("item", 0);
-                if ((item + 2) % 2 == 0) {
-                    //run time
-                    if (sharedPreferences.contains(PreferenceString.runTimeRingtone)) {
-                        ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.runTimeRingtone, ""));
-                    } else {
-                        ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
+            boolean alarm = sharedPreferences.getBoolean(PreferenceString.NOTIFICATIONS, true);
+            if (alarm) {
+                final OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
+                    @Override
+                    public void onAudioFocusChange(int focusChange) {
                     }
-                } else {
-                    //rest time
-                    if (sharedPreferences.contains(PreferenceString.restTimeRingtone)) {
-                        ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.restTimeRingtone, ""));
+                };
+                audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                int result = audioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_ALARM,
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE);
+                    Uri ringTone = null;
+                    int item = intent.getIntExtra("item", 0);
+                    if ((item + 2) % 2 == 0) {
+                        //run time
+                        if (sharedPreferences.contains(PreferenceString.runTimeRingtone)) {
+                            ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.runTimeRingtone, ""));
+                        } else {
+                            ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        }
                     } else {
-                        ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        //rest time
+                        if (sharedPreferences.contains(PreferenceString.restTimeRingtone)) {
+                            ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.restTimeRingtone, ""));
+                        } else {
+                            ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        }
                     }
-                }
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-                try {
-                    mediaPlayer.setDataSource(this, ringTone);
-                    mediaPlayer.prepare();
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                    try {
+                        mediaPlayer.setDataSource(this, ringTone);
+                        mediaPlayer.prepare();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                Log.i("AudioService", "start to play music");
+                                mediaPlayer.start(); // then start
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            Log.i("AudioService", "start to play music");
-                            mediaPlayer.start(); // then start
+                        public void onCompletion(MediaPlayer mp) {
+                            audioManager.abandonAudioFocus(afChangeListener);
+                            mediaPlayer.release();
+                            mediaPlayer = null;
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        audioManager.abandonAudioFocus(afChangeListener);
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                    }
-                });
-
+            }
+            //vibrator 3 second
+            Boolean vibrate = sharedPreferences.getBoolean(PreferenceString.VIBRATOR, false);
+            int permission = getPackageManager().checkPermission(VIBRATOR_SERVICE, getPackageName());
+            Timber.i("permission: %s", permission); //some devices not need it and return -1
+            if (vibrate) {
+                Timber.i("vibrate 3000");
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vibrator.vibrate(3000);
+            } else {
+                Timber.i("not permission");
             }
         }
-        //vibrator 5 second
-        sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
-        Boolean vibrate = sharedPreferences.getBoolean(PreferenceString.VIBRATOR,false);
-        int permission = getPackageManager().checkPermission(VIBRATOR_SERVICE,getPackageName());
-        Timber.i("permission: %s",permission); //some devices not need it and return -1
-        if(vibrate){
-            Timber.i("vibrate 3000");
-            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            vibrator.vibrate(3000);
-        }else{
-            Timber.i("not permission");
-        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 

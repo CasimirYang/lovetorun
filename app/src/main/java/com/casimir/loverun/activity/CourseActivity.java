@@ -220,22 +220,6 @@ public class CourseActivity extends BaseActivity {
         handler.removeMessages(PROGRESS_MESSAGE);
     }
 
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        Log.d("log", "onSaveInstanceState");
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d("log", "onRestoreInstanceState");
-    }
-
-
-
-
     @Override
     protected void onStop() {
         Log.d("log", "onStop");
@@ -249,6 +233,5 @@ public class CourseActivity extends BaseActivity {
         Log.d("log", "ondestroy");
         stopRun();
     }
-
 
 }

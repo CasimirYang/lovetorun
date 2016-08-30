@@ -180,7 +180,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             if(pi.versionCode == version){
                                 Toast.makeText(SettingActivity.this,"当前版本已经是最新版",Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(SettingActivity.this,"有新版本",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingActivity.this,"有新版本,赶紧去应用市场下载吧",Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

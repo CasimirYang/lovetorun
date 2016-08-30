@@ -15,13 +15,12 @@
 
     <style name="MainTheme" parent="AppTheme" >
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
-        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
         <!-- Toolbar Theme / Apply white arrow -->
         <item name="colorControlNormal">@android:color/white</item>
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
         <!-- Material Theme -->
-        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
     </style>
 
     <style name="SettingTheme" parent="AppTheme">

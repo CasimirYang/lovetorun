@@ -17,6 +17,7 @@
     <color name="cpv_restBarColor">#a0c828</color>
     <color name="cpv_restFillColor">#a0c828</color>
 
+    <color name="initBackground">#2d2c2c</color>
     <color name="setting_head_text">#b67138</color>
     <drawable name="setting_pressed">#7c7a7a</drawable>
     <drawable name="header_background">#2d2c2c</drawable>
