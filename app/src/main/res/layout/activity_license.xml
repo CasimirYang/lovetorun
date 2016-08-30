@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.justsaver.yjh.loverun.activity.LicenseActivity"
+    tools:context="com.casimir.loverun.activity.LicenseActivity"
     >
 
     <include layout="@layout/common_tool_bar" />

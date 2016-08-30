@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/hint_foreground_dark"
-    tools:context="com.justsaver.yjh.loverun.activity.CourseActivity">
+    tools:context="com.casimir.loverun.activity.CourseActivity">
 
     <!--<Button-->
         <!--android:id="@+id/startRun"-->

@@ -1,6 +1,6 @@
 <android.support.v7.widget.LinearLayoutCompat
     android:layout_gravity="center"
-    tools:context="com.justsaver.yjh.loverun.widget.FeedBackDialogFragment"
+    tools:context="com.casimir.loverun.widget.FeedBackDialogFragment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"

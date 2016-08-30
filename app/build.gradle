@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.justsaver.yjh.loverun"
+        applicationId "com.casimir.loverun"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
@@ -54,6 +54,8 @@ dependencies {
     }
 
     compile 'com.github.lzyzsd.randomcolor:library:1.0.0'
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
 
 }
 
