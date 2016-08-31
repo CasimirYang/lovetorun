@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.casimir.loverun.R;
+import com.casimir.loverun.activity.CourseActivity;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
 
     private final int REST_TIME = 0;
     private final int RUN_TIME = 1;
-    private int currentProgress = -1;
-    private long remainTime = -2L;
+   // private int currentProgress = -1;
+   // private long remainTime = -2L;
     private Context context;
 
 
@@ -68,27 +69,27 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
         holder.timeDisplay.setText(textValue);
 
         Log.i("onBindViewHolder","before cal position:"+position); 
-        Log.i("onBindViewHolder","before cal remainTime:"+remainTime); 
-        Log.i("onBindViewHolder","before cal currentProgress:"+currentProgress);  
+      //  Log.i("onBindViewHolder","before cal remainTime:"+remainTime);
+       // Log.i("onBindViewHolder","before cal currentProgress:"+currentProgress);
         CircleProgressView circleProgressView = holder.progressBar;
         long expiredTime = 0L;
-        if(remainTime != -2L){ //resume moment
-            expiredTime = remainTime;
+      //  if(CourseActivity.remainTime != -2L){ //resume moment
+            expiredTime = CourseActivity.remainTime;
             long temp =0;
             for(int i=timeList.size()-1; i>=0; i--){
                 temp = temp + timeList.get(i);
-                if(remainTime < temp){
-                    currentProgress = i;
-                    expiredTime = temp-remainTime;
+                if(CourseActivity.remainTime <= temp){
+                 //   CourseActivity.currentProgress = i;
+                    expiredTime = temp-CourseActivity.remainTime;
                     break;
                 }
             }
-        }
-        Log.i("onBindViewHolder","after cal currentProgress:"+currentProgress); 
+     //   }
+        Log.i("onBindViewHolder","after cal currentProgress:"+CourseActivity.currentProgress);
         Log.i("onBindViewHolder","after cal expiredTime:"+expiredTime);
-        if(currentProgress > position){
+        if(CourseActivity.currentProgress > position){
             circleProgressView.setValue(100f);
-        }else if(currentProgress == position){
+        }else if(CourseActivity.currentProgress == position){
             long animationDuration = timeList.get(position)-expiredTime;
             expiredTime = (expiredTime*100)/(timeList.get(position));
             Log.i("onBindViewHolder","animationDuration:"+animationDuration);
@@ -101,17 +102,17 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
     }
 
 
-    public void setCurrentProgress(int currentProgress) {
-        this.currentProgress = currentProgress;
-    }
-
-    public int getCurrentProgress() {
-        return currentProgress;
-    }
-
-    public void setRemainTime(long remainTime) {
-        this.remainTime = remainTime;
-    }
+//    public void setCurrentProgress(int currentProgress) {
+//        this.currentProgress = currentProgress;
+//    }
+//
+//    public int getCurrentProgress() {
+//        return currentProgress;
+//    }
+//
+//    public void setRemainTime(long remainTime) {
+//        this.remainTime = remainTime;
+//    }
 
     @Override
     public int getItemCount() {
@@ -119,7 +120,6 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         private CircleProgressView progressBar;
         private AppCompatTextView timeDisplay;
         public ViewHolder(View itemView) {

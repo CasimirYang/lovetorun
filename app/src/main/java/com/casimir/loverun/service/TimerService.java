@@ -59,6 +59,22 @@ public class TimerService extends Service {
                     millisUntilFinished = millis;
                     msg.what = CourseActivity.REMAIN_TIME;
                     msg.obj = millisUntilFinished;
+                    int currentProgress = 0;
+                        long temp = 0;
+                        for(int i=timeArray.length-1; i>=0; i--){
+                            temp = temp + timeArray[i];
+                            if(millisUntilFinished < temp){
+                                currentProgress = i;
+                                break;
+                            }
+                        }
+                    msg.arg1 = currentProgress;
+                    if(currentProgress > CourseActivity.currentProgress){
+                        sentAlarm(currentProgress);
+                        msg.arg2 = 1;
+                    }else {
+                        msg.arg2 = 0; //not refresh
+                    }
                     try {
                         messenger.send(msg);
                         Log.i("TimerService", "send message:" + millisUntilFinished);
@@ -69,41 +85,20 @@ public class TimerService extends Service {
                 }
             };
             countDownTimer.start();
-
-
-            //alarm
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            long expire = 0;
-            for(int i=0; i<timeArray.length; i++){
-               Intent audioIntent = new Intent("android.intent.action.AUDIO_SERVICE");
-                audioIntent.setPackage(getPackageName());
-                audioIntent.putExtra("item",i);
-                PendingIntent pendingIntent = PendingIntent.getService(this,i,
-                        audioIntent,PendingIntent.FLAG_CANCEL_CURRENT);
-                Timber.i("set alarm,pendingIntent: %s",pendingIntent.toString());
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        SystemClock.elapsedRealtime()+expire,pendingIntent);
-                expire = expire + timeArray[i];
-            }
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void sentAlarm(int currentProgress) {
+        Intent audioIntent = new Intent("android.intent.action.AUDIO_SERVICE");
+        audioIntent.setPackage(getPackageName());
+        audioIntent.putExtra("item",currentProgress);
+        startService(new Intent(this,AudioService.class));
     }
 
     @Override
     public void onDestroy() {
         Log.i("TimerService","cancel countDownTimer and alarm");
-        Intent audioIntent = new Intent();
-        audioIntent.setAction("android.intent.action.AUDIO_SERVICE");
-        audioIntent.setPackage(getPackageName());
-        for(int i=0; i<timeArray.length; i++){
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            PendingIntent pendingIntent = PendingIntent.getService(this,i,
-                    audioIntent,PendingIntent.FLAG_NO_CREATE);
-            if(pendingIntent != null){
-                Timber.i("cancel alarm,pendingIntent: %s",pendingIntent.toString());
-                alarmManager.cancel(pendingIntent);
-            }
-        }
         countDownTimer.cancel();
         super.onDestroy();
     }

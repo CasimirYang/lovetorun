@@ -7,7 +7,7 @@
 
     <gradient
         android:endColor="#be4f33"
-        android:gradientRadius="40.0dp"
+        android:gradientRadius="50.0"
         android:startColor="#8e2821"
         android:type="linear"/>
 

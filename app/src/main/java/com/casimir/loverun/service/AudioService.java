@@ -107,7 +107,6 @@ public class AudioService extends Service {
                 Timber.i("not permission");
             }
         }
-
         return super.onStartCommand(intent, flags, startId);
     }
 

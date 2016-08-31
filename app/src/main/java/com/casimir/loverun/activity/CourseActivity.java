@@ -1,11 +1,13 @@
 package com.casimir.loverun.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.service.TimerService;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,42 +42,46 @@ public class CourseActivity extends BaseActivity {
 
     private CourseTimeLineAdapter courseTimeLineAdapter;
     private List<Long> timeList;
-    private boolean fetchFromService = false;
     private Status status;
 
+    public static  int currentProgress = -1;
+    public static long remainTime = 0;
+
     public static final int PROGRESS_MESSAGE = 1;
-    public static final int FINISH_MESSAGE = 2;
     public static final int REMAIN_TIME = 3;
 
     @BindView(R.id.RunButton) Button RunButton;
     @BindView(R.id.runView) RecyclerView recyclerView;
 
-    private Handler handler = new Handler() {
+    private Handler handler = new CourseHandler(this);
+
+    static class CourseHandler extends Handler{
+        WeakReference<CourseActivity> courseActivityWR;
+
+        public CourseHandler(CourseActivity activity) {
+            courseActivityWR = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            if(fetchFromService){
-                if(msg.what == REMAIN_TIME){
-                    Log.i("CourseActivity", "receive message from remain time:" + msg.obj);
-                    long millisUntilFinished = (long) msg.obj;
-                    courseTimeLineAdapter.setRemainTime(millisUntilFinished);
-                    courseTimeLineAdapter.notifyDataSetChanged();
-                    if(millisUntilFinished == 0){
-                        changeRunStatus(Status.DONE);
-                    }
+            CourseActivity courseActivity = courseActivityWR.get();
+            if(msg.what == REMAIN_TIME){
+                 Log.i("CourseActivity", "receive message from remain time:" + msg.obj);
+                long millisUntilFinished = (long) msg.obj;
+                // courseTimeLineAdapter.setRemainTime(millisUntilFinished);
+                remainTime = millisUntilFinished;
+                currentProgress = msg.arg1;
+                if(msg.arg2 == 1){
+                    courseActivity.courseTimeLineAdapter.notifyDataSetChanged();
+                    courseActivity.recyclerView.smoothScrollToPosition(currentProgress);
                 }
-            }else{
-                if (msg.what == PROGRESS_MESSAGE) {
-                    Log.i("CourseActivity", "receive message from progress_message:" + msg.arg1);
-                    courseTimeLineAdapter.setRemainTime(-2L);
-                    courseTimeLineAdapter.setCurrentProgress(msg.arg1);
-                    courseTimeLineAdapter.notifyItemChanged(msg.arg1);
-                    recyclerView.smoothScrollToPosition(msg.arg1);
-                } else if (msg.what == FINISH_MESSAGE) {
-                    changeRunStatus(Status.DONE);
+                if(millisUntilFinished == 0){
+                    courseActivity.changeRunStatus(Status.DONE);
                 }
             }
         }
-    };
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +110,7 @@ public class CourseActivity extends BaseActivity {
 
     private void init(int weekLevel, int courseLevel) {
         SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE);
-        String plan = sharedPreferences.getString(weekLevel + "_" + courseLevel + "_plan", null);
+        String plan = sharedPreferences.getString(weekLevel + "_" + courseLevel + "_plan", "");
         String[] planList = plan.split(",");
         timeList = new ArrayList<>(planList.length);
         for (String item : planList) {
@@ -115,25 +122,6 @@ public class CourseActivity extends BaseActivity {
   @OnClick(R.id.RunButton) public void RunButton() {
       if(status == Status.IDLE){
           changeRunStatus(Status.RUNNING);
-          //start to  send message to refresh recycleView Item
-          new Thread(new Runnable() {
-              @Override
-              public void run() {
-                  int size = timeList.size();
-                  long runAtTime = 0;
-                  for (int i = 0; i < size; i++) {
-                      Message message = new Message();
-                      message.what = PROGRESS_MESSAGE;
-                      message.arg1 = i;
-                      handler.sendMessageDelayed(message, runAtTime);
-                      runAtTime = runAtTime + timeList.get(i);
-                      Log.i("send message", "startToRun send message:" + i);
-                  }
-                  Message message = new Message();
-                  message.what = FINISH_MESSAGE;
-                  handler.sendMessageDelayed(message, runAtTime);
-              }
-          }).start();
 
           //start TimerService
           Intent serviceIntent = new Intent(this, TimerService.class);
@@ -144,6 +132,7 @@ public class CourseActivity extends BaseActivity {
           serviceIntent.putExtra("handler", new Messenger(handler));
           serviceIntent.putExtra("timeArray",timeArray);
           startService(serviceIntent);
+          recyclerView.clearOnScrollListeners();
       }else if(status == Status.DONE){
           stopRun();
           setResult(RESULT_OK);
@@ -151,7 +140,7 @@ public class CourseActivity extends BaseActivity {
       }
     }
 
-    private void changeRunStatus(Status status){
+    private void changeRunStatus( Status status){
         this.status = status;
         switch (status){
             case RUNNING:
@@ -172,14 +161,13 @@ public class CourseActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         Timber.i("onstart");
-        recyclerView.scrollToPosition(courseTimeLineAdapter.getCurrentProgress());
+        recyclerView.scrollToPosition(currentProgress);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.d("log", "onRestart");
-        fetchFromService = false;
     }
 
 
@@ -218,13 +206,14 @@ public class CourseActivity extends BaseActivity {
         stopAudioService.setPackage(getPackageName());
         stopService(stopAudioService);
         handler.removeMessages(PROGRESS_MESSAGE);
+        currentProgress = -1;
+        remainTime = 0;
     }
 
     @Override
     protected void onStop() {
         Log.d("log", "onStop");
         super.onStop();
-        fetchFromService = true;
     }
 
     @Override
