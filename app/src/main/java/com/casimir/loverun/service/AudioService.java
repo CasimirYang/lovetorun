@@ -72,6 +72,7 @@ public class AudioService extends Service {
                     mediaPlayer = new MediaPlayer();
                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
                     try {
+                        mediaPlayer.reset();
                         mediaPlayer.setDataSource(this, ringTone);
                         mediaPlayer.prepare();
                         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
