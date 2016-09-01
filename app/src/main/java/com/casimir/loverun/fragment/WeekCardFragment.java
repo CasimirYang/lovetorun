@@ -214,7 +214,7 @@ public class WeekCardFragment extends Fragment {
 
     @Override
     public void onStart() {
-
+        //refresh next week if weekLevel up
         if(forceRefresh && (weekLevel == position)){
             refreshUI();
             forceRefresh = false;
