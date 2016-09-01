@@ -68,7 +68,6 @@ public class CourseActivity extends BaseActivity {
             if(msg.what == REMAIN_TIME && courseActivity != null){
                  Log.i("CourseActivity", "receive message from remain time:" + msg.obj);
                 long millisUntilFinished = (long) msg.obj;
-                // courseTimeLineAdapter.setRemainTime(millisUntilFinished);
                 remainTime = millisUntilFinished;
                 currentProgress = msg.arg1;
                 if(msg.arg2 == 1){

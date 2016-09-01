@@ -13,9 +13,6 @@ import android.view.View;
 
 import com.casimir.loverun.R;
 
-/**
- * TODO: document your custom view class.
- */
 public class WrapContentViewPager extends ViewPager {
 
 

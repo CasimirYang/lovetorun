@@ -101,19 +101,6 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
 
     }
 
-
-//    public void setCurrentProgress(int currentProgress) {
-//        this.currentProgress = currentProgress;
-//    }
-//
-//    public int getCurrentProgress() {
-//        return currentProgress;
-//    }
-//
-//    public void setRemainTime(long remainTime) {
-//        this.remainTime = remainTime;
-//    }
-
     @Override
     public int getItemCount() {
         return timeList.size();

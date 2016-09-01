@@ -67,7 +67,7 @@ public class InitActivity extends BaseActivity {
 
     private void loadData(){
         SharedPreferences.Editor editor = getSharedPreferences(PreferenceString.userInfo, MODE_PRIVATE).edit();
-        editor.putString("1_0_text","3个原则：适度、坚持、休息");
+        editor.putString("1_0_text","基本原则\n\n\n适度: 放慢跑步速度,循序渐进,让身体适应\n\n坚持: 一周三次\n\n休息: 隔日执行计划 给身体时间恢复");
         editor.putString("2_0_text","建立基础");
         editor.putString("3_0_text","增加跑步的时间");
         editor.putString("4_0_text","恢复期");

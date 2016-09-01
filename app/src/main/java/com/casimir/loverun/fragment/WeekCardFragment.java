@@ -98,7 +98,6 @@ public class WeekCardFragment extends Fragment {
         weekLevel = sharedPreferences.getInt(PreferenceString.weekLevel,1);
         courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
         int weekNo = position +1;
-       // weekLayout.setBackgroundColor(new RandomColor().randomColor());
         weekNoView.setText("第"+weekNo+"周");
         weekTipView.setText(sharedPreferences.getString(weekNo+"_0_text",""));
         courseOneFinishTime.setText(sharedPreferences.getString(weekNo+"_1",""));
@@ -223,7 +222,6 @@ public class WeekCardFragment extends Fragment {
         super.onStart();
     }
 
-    //todo  delete
     @Override
     public void onStop() {
         Timber.i("onStop %d",position);

@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
 
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setPageMargin(200); //todo change to from DP
+        viewPager.setPageMargin(dip2px(this,50));
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             @Override
@@ -96,6 +96,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            return super.onKeyDown(keyCode, event);
 //        }
 //    }
+
+
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
 
     @Override
     public void onClick(View v) {
