@@ -143,7 +143,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
+                android:layout_height="70dp"
                 android:background="#ebebeb"
                 android:id="@+id/course_three"
                 android:clipChildren="false">

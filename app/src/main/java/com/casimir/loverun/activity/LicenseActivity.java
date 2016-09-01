@@ -33,6 +33,8 @@ public class LicenseActivity extends BaseActivity {
         customLicenses.add(new License(this, "Circle-Progress-View", LicenseType.MIT_LICENSE, "2015", "jakob-grabner"));
         customLicenses.add(new License(this, "hugo", LicenseType.APACHE_LICENSE_20, "2013", "Jake Wharton"));
         customLicenses.add(new License(this, "timber", LicenseType.APACHE_LICENSE_20, "2013", "Jake Wharton"));
+        customLicenses.add(new License(this, "butterknife", LicenseType.APACHE_LICENSE_20, "2013", "Jake Wharton"));
+
 
         ScrollViewLicenseFragment fragment = ScrollViewLicenseFragment.newInstance();
         fragment.addCustomLicense(customLicenses);

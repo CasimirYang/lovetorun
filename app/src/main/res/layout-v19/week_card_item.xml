@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/weekLayout"
-            android:layout_height="210dp"
+            android:layout_height="240dp"
             android:background="@drawable/cardview_background"
             >
             <android.support.v7.widget.AppCompatTextView

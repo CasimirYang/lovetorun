@@ -65,7 +65,7 @@ public class CourseActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             CourseActivity courseActivity = courseActivityWR.get();
-            if(msg.what == REMAIN_TIME){
+            if(msg.what == REMAIN_TIME && courseActivity != null){
                  Log.i("CourseActivity", "receive message from remain time:" + msg.obj);
                 long millisUntilFinished = (long) msg.obj;
                 // courseTimeLineAdapter.setRemainTime(millisUntilFinished);
@@ -122,7 +122,7 @@ public class CourseActivity extends BaseActivity {
   @OnClick(R.id.RunButton) public void RunButton() {
       if(status == Status.IDLE){
           changeRunStatus(Status.RUNNING);
-
+          
           //start TimerService
           Intent serviceIntent = new Intent(this, TimerService.class);
           long[] timeArray = new long[timeList.size()];
@@ -132,7 +132,6 @@ public class CourseActivity extends BaseActivity {
           serviceIntent.putExtra("handler", new Messenger(handler));
           serviceIntent.putExtra("timeArray",timeArray);
           startService(serviceIntent);
-          recyclerView.clearOnScrollListeners();
       }else if(status == Status.DONE){
           stopRun();
           setResult(RESULT_OK);

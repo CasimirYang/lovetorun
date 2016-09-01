@@ -35,7 +35,6 @@ public class AudioService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //todo  change to thread
         Log.i("AudioService", "onStartCommand");
         if (intent != null) {
             sharedPreferences = getSharedPreferences(PreferenceString.configInfo, MODE_PRIVATE);
@@ -74,14 +73,14 @@ public class AudioService extends Service {
                     try {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(this, ringTone);
-                        mediaPlayer.prepare();
                         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 Log.i("AudioService", "start to play music");
-                                mediaPlayer.start(); // then start
+                                mp.start(); // then start
                             }
                         });
+                        mediaPlayer.prepare();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -89,8 +88,9 @@ public class AudioService extends Service {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             audioManager.abandonAudioFocus(afChangeListener);
-                            mediaPlayer.release();
-                            mediaPlayer = null;
+                            if(mp != null){
+                                mp.release();
+                            }
                         }
                     });
                 }
