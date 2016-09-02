@@ -8,6 +8,10 @@ import android.os.Messenger;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
@@ -32,7 +36,6 @@ public class InitActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-
         if(ifFirstRun()){
             new Thread(new Runnable() {
                 @Override

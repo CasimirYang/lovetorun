@@ -93,7 +93,7 @@ public class TimerService extends Service {
         Intent audioIntent = new Intent("android.intent.action.AUDIO_SERVICE");
         audioIntent.setPackage(getPackageName());
         audioIntent.putExtra("item",currentProgress);
-        startService(new Intent(this,AudioService.class));
+        startService(audioIntent);
     }
 
     @Override

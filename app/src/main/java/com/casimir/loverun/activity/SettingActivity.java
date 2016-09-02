@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
@@ -150,14 +151,23 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.start_run:
                 Intent run = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                run.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+                run.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
                 run.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select ringtone:");
-                startActivityForResult(run,0);
+//                if (sharedPreferences.contains(PreferenceString.runTimeRingtone)) {
+//                    Uri ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.runTimeRingtone, ""));
+//                    run.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT,ringTone);
+//                }
+                startActivityForResult(run,3);
                 break;
             case R.id.start_rest:
                 Intent rest = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                rest.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
                 rest.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select ringtone:");
-                startActivityForResult(rest,1);
+//                if (sharedPreferences.contains(PreferenceString.restTimeRingtone)) {
+//                    Uri ringTone = Uri.parse(sharedPreferences.getString(PreferenceString.restTimeRingtone, ""));
+//                    rest.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT,ringTone);
+//                }
+                startActivityForResult(rest,4);
                 break;
             case R.id.license:
                 startActivity(new Intent(this,LicenseActivity.class));

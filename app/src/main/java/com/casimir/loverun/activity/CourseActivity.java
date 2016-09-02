@@ -203,7 +203,7 @@ public class CourseActivity extends BaseActivity {
         stopAudioService.setAction("android.intent.action.AUDIO_SERVICE");
         stopAudioService.setPackage(getPackageName());
         stopService(stopAudioService);
-        handler.removeMessages(PROGRESS_MESSAGE);
+        handler.removeCallbacksAndMessages(null);
         currentProgress = -1;
         remainTime = 0;
     }
