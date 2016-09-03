@@ -1,6 +1,5 @@
 package com.casimir.loverun.adapter;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,16 +15,12 @@ import com.casimir.loverun.data.WeekCard;
 
 import java.util.List;
 
-/**
- * Created by yjh on 16/8/12.
- */
 public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHolder>  {
 
     private List<WeekCard> dataList;
     private int resource;
     private int weekLevel;
     private int courseLevel;
-    private Activity activity;
 
     private OnItemClickListener onItemClickListener;
 
@@ -43,8 +38,7 @@ public class WeekCardAdapter extends RecyclerView.Adapter<WeekCardAdapter.ViewHo
         this.courseLevel = courseLevel;
     }
 
-    public WeekCardAdapter(Activity activity,@NonNull List<WeekCard> list,@NonNull int layout,int weekLevel,int courseLevel) {
-        this.activity = activity;
+    public WeekCardAdapter(@NonNull List<WeekCard> list, int layout,int weekLevel,int courseLevel) {
         this.dataList = list;
         this.resource = layout;
         this.weekLevel = weekLevel;

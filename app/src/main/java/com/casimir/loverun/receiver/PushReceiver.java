@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.igexin.sdk.PushConsts;
 
-import java.util.Timer;
 
 import timber.log.Timber;
 

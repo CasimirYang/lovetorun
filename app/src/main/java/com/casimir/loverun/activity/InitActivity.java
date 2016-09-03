@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Messenger;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
 import com.casimir.loverun.base.BaseActivity;
+
+import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
@@ -23,15 +19,28 @@ public class InitActivity extends BaseActivity {
 
     public static final int INIT_DONE = 1;
 
-    Handler handler =new Handler(){
+    private Handler handler = new InitHandler(this);
+
+    public static class InitHandler extends Handler{
+
+        InitActivity initActivity;
+        WeakReference<InitActivity> initActivityWeakReference;
+        public InitHandler(InitActivity activity) {
+            initActivityWeakReference = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == INIT_DONE){
-                startActivity(new Intent(InitActivity.this,MainActivity.class));
+                initActivity = initActivityWeakReference.get();
+                if(initActivity != null){
+                    initActivity.startActivity(new Intent(initActivity,MainActivity.class));
+                }
             }
         }
-    };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

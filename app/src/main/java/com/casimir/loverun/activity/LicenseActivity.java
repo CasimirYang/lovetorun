@@ -2,10 +2,8 @@ package com.casimir.loverun.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.artitk.licensefragment.ScrollViewLicenseFragment;
@@ -13,7 +11,6 @@ import com.artitk.licensefragment.model.License;
 import com.artitk.licensefragment.model.LicenseType;
 import com.casimir.loverun.R;
 import com.casimir.loverun.base.BaseActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -50,7 +47,9 @@ public class LicenseActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            startActivity(new Intent(this, SettingActivity.class));
+            Intent intent = new Intent(this, SettingActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

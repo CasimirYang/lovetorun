@@ -6,18 +6,15 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.casimir.loverun.Constant.PreferenceString;
 import com.casimir.loverun.R;
 import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.fragment.WeekCardFragment;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,10 +22,10 @@ import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private long pressTime = 0;
+    //private long pressTime = 0;
     public static final int START_RUN = 101;
     private int weekLevel;
-    private int courseLevel;
+   // private int courseLevel;
 
 @BindView(R.id.ViewPager)  ViewPager viewPager;
 @BindView(R.id.toolbar) Toolbar toolbar;
@@ -47,7 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PreferenceString.userInfo, Context.MODE_PRIVATE);
         weekLevel = sharedPreferences.getInt(PreferenceString.weekLevel,1);
-        courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
+     //   courseLevel = sharedPreferences.getInt(PreferenceString.courseLevel,1);
 
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(dip2px(this,50));

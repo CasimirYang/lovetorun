@@ -16,9 +16,6 @@ import java.util.List;
 
 import at.grabner.circleprogress.CircleProgressView;
 
-/**
- * Created by yjh on 16/8/14.
- */
 public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAdapter.ViewHolder>{
 
     private final int REST_TIME = 0;
@@ -72,7 +69,7 @@ public class CourseTimeLineAdapter extends RecyclerView.Adapter<CourseTimeLineAd
       //  Log.i("onBindViewHolder","before cal remainTime:"+remainTime);
        // Log.i("onBindViewHolder","before cal currentProgress:"+currentProgress);
         CircleProgressView circleProgressView = holder.progressBar;
-        long expiredTime = 0L;
+        long expiredTime;
       //  if(CourseActivity.remainTime != -2L){ //resume moment
             expiredTime = CourseActivity.remainTime;
             long temp =0;

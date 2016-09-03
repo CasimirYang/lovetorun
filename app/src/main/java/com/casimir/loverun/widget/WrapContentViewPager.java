@@ -1,17 +1,9 @@
 package com.casimir.loverun.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.casimir.loverun.R;
 
 public class WrapContentViewPager extends ViewPager {
 

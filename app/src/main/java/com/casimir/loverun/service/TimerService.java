@@ -1,21 +1,16 @@
 package com.casimir.loverun.service;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.casimir.loverun.activity.CourseActivity;
 
-import timber.log.Timber;
 
 public class TimerService extends Service {
 

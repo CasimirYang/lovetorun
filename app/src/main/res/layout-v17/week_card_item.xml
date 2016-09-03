@@ -37,7 +37,6 @@
                 android:id="@+id/weekTip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:text="基本原则\n\n适度: 放慢跑步速度,循序渐进，让身体适应\n\n坚持: 一周三次\n\n休息: 隔日执行计划 给身体时间恢复"
                 android:textSize="13sp"
                 android:layout_marginLeft="20dp"

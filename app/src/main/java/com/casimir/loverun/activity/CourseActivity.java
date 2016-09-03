@@ -1,15 +1,12 @@
 package com.casimir.loverun.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +20,6 @@ import com.casimir.loverun.R;
 import com.casimir.loverun.adapter.CourseTimeLineAdapter;
 import com.casimir.loverun.base.BaseActivity;
 import com.casimir.loverun.service.TimerService;
-import com.umeng.analytics.MobclickAgent;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -47,7 +43,6 @@ public class CourseActivity extends BaseActivity {
     public static  int currentProgress = -1;
     public static long remainTime = 0;
 
-    public static final int PROGRESS_MESSAGE = 1;
     public static final int REMAIN_TIME = 3;
 
     @BindView(R.id.RunButton) Button RunButton;

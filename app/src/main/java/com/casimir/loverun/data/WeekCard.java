@@ -1,8 +1,5 @@
 package com.casimir.loverun.data;
 
-/**
- * Created by yjh on 16/8/12.
- */
 public final class WeekCard {
     private String weekNo;
     private String weekTip;

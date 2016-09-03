@@ -15,14 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.casimir.loverun.R;
-import com.maxleap.MLDataManager;
-import com.maxleap.MLObject;
-import com.maxleap.SaveCallback;
-import com.maxleap.exception.MLException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class FeedBackDialogFragment extends DialogFragment{
 
@@ -41,8 +40,7 @@ public class FeedBackDialogFragment extends DialogFragment{
     }
 
     public static FeedBackDialogFragment newInstance() {
-        FeedBackDialogFragment fragment = new FeedBackDialogFragment();
-        return fragment;
+        return new FeedBackDialogFragment();
     }
     public FeedBackDialogFragment() {
         // Required empty public constructor
@@ -71,21 +69,30 @@ public class FeedBackDialogFragment extends DialogFragment{
        if(mEditText.length()>10){
             //sent feedback
            activity = getActivity();
-           MLObject myComment = new MLObject("feedback");
-           myComment.put("content",mEditText.getText().toString());
-           MLDataManager.saveInBackground(myComment,new SaveCallback(){
-
+           FeedBack feedBack = new FeedBack();
+           feedBack.setMessage(mEditText.getText().toString());
+           feedBack.save(new SaveListener<String>() {
                @Override
-               public void done(MLException e) {
-                   if(e != null){
+               public void done(String s, BmobException e) {
+                   if(e!=null){
                        Toast.makeText(activity,"无法连接",Toast.LENGTH_SHORT).show();
                    }
                }
            });
            dismiss();
-         //  onCloseListener.closeDialog(this);
         }else{
            Toast.makeText(getActivity(),"请输入至少10个字符",Toast.LENGTH_SHORT).show();
        }
+    }
+    public class FeedBack extends BmobObject {
+        private String message;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 }

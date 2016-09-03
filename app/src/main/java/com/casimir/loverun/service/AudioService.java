@@ -50,7 +50,7 @@ public class AudioService extends Service {
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
 
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    Uri ringTone = null;
+                    Uri ringTone;
                     int item = intent.getIntExtra("item", 0);
                     if ((item + 2) % 2 == 0) {
                         //run time

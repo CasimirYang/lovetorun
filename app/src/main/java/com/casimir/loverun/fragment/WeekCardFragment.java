@@ -1,5 +1,6 @@
 package com.casimir.loverun.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,9 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-/**
- * Created by yjh on 16/8/24.
- */
 public class WeekCardFragment extends Fragment {
 
     private int position;
@@ -179,8 +177,7 @@ public class WeekCardFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
          super.onActivityResult(requestCode, resultCode, data);
         Timber.i("from fragment onActivityResult %d,%d ",requestCode,resultCode);
-        if(requestCode == MainActivity.START_RUN &&  resultCode == getActivity().RESULT_OK){
-            if(requestCode == MainActivity.START_RUN &&  resultCode == getActivity().RESULT_OK){
+        if(requestCode == MainActivity.START_RUN &&  resultCode == Activity.RESULT_OK){
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(PreferenceString.userInfo, Context.MODE_PRIVATE).edit();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 sdf.setTimeZone(TimeZone.getDefault());
@@ -200,7 +197,6 @@ public class WeekCardFragment extends Fragment {
                 if(weekLevel > 13){
                     //todo  popup message: finish all course
                 }
-            }
             refreshUI();
         }
     }

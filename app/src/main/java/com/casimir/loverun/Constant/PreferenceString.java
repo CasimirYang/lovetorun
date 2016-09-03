@@ -1,8 +1,5 @@
 package com.casimir.loverun.Constant;
 
-/**
- * Created by yjh on 16/8/17.
- */
 public class PreferenceString {
     public final static String userInfo = "userInfo";
     public final static String configInfo = "configInfo";

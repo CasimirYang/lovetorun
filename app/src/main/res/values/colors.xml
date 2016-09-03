@@ -5,19 +5,15 @@
     <color name="colorAccent">#9e6b42</color>
     <color name="hint_foreground_dark">#2d2c2c</color>
     <color name="white">#ffffffff</color>
-    <color name="black">#ff000000</color>
-    <color name="darker_gray">#aaa</color>
 
     <color name="cpv_textColor">#ebebeb</color>
     <color name="cpv_rimColor">#2d2c2c</color>
     <color name="cpv_unitColor">#ebebeb</color>
     <color name="cpv_runBarColor">#d24b26</color>
     <color name="cpv_runFillColor">#d24b26</color>
-    <color name="cpv_barColor">#a0c828</color>
     <color name="cpv_restBarColor">#a0c828</color>
     <color name="cpv_restFillColor">#a0c828</color>
 
-    <color name="initBackground">#2d2c2c</color>
     <color name="setting_head_text">#b67138</color>
     <drawable name="setting_pressed">#7c7a7a</drawable>
     <drawable name="header_background">#2d2c2c</drawable>

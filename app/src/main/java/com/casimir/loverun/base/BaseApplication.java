@@ -4,14 +4,10 @@ import android.app.Application;
 import android.util.Log;
 
 import com.casimir.loverun.BuildConfig;
-import com.maxleap.MaxLeap;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-/**
- * Created by yjh on 16/8/23.
- */
 
 public class BaseApplication extends Application {
 
@@ -23,15 +19,10 @@ public class BaseApplication extends Application {
 
       //  MobclickAgent.setSessionContinueMillis(sessionTimeOut);
 
-        MaxLeap.initialize(this, "57bb20a601e3b30007d4d265", "ZmxxRWUxQWNmaElrMUw5OUt3TlJKQQ", MaxLeap.REGION_CN);
+     //   MaxLeap.initialize(this, "57ca6cabb0d85000071fbef9", "WXFIcUFyS2ZUYUFndmN4aFNOTl8wQQ", MaxLeap.REGION_CN);
 
         ButterKnife.setDebug(BuildConfig.DEBUG);
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        } else {
-            Timber.plant(new CrashReportingTree());
-        }
     }
 
     /** A tree which logs important information for crash reporting. */
